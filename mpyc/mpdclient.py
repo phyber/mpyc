@@ -31,12 +31,12 @@ class MPC:
 			return False
 		return True
 
-	def execute(self, func, args=None):
+	def execute(self, func_name, args=None):
 		if self._client is None:
 			self.connect()
-		if func in VALID_COMMANDS:
+		if func_name in VALID_COMMANDS:
 			try:
-				func = getattr(self._client, func)
+				func = getattr(self._client, func_name)
 				if args is None:
 					ret = func()
 				else:
@@ -45,4 +45,4 @@ class MPC:
 			except:
 				raise
 		else:
-			raise InvalidCommand("Invalid command: {}".format(func))
+			raise InvalidCommand("Invalid command: '{}'".format(func_name))
