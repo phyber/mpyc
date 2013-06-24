@@ -1,0 +1,19 @@
+mpyc
+====
+
+Decrypt your Titanium Backup files on the command line.
+
+Requirements
+------------
+
+ * Python 2.7 (might work with other versions, but was developed with this)
+ * [Flask](http://flask.pocoo.org/)
+  * python-flask in Debian Wheezy.
+ * [python-mpd](http://jatreuman.indefero.net/p/python-mpd/)
+  * python-mpd in Debian Wheezy.
+
+
+Todo
+----
+
+ * Make it not-terrible.
