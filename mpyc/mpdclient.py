@@ -31,6 +31,13 @@ class MPC:
 			return False
 		return True
 
+	def disconnect(self):
+		try:
+			self._client.disconnect()
+		except:
+			pass
+		self._client = None
+
 	def execute(self, func_name, args=None):
 		if self._client is None:
 			self.connect()
@@ -42,7 +49,8 @@ class MPC:
 				else:
 					ret = func(*args)
 				return ret
-			except:
+			except socket.error as e:
+				self.disconnect()
 				raise
 		else:
 			raise InvalidCommand("Invalid command: '{}'".format(func_name))
