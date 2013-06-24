@@ -3,4 +3,4 @@
 from mpyc import app
 
 # Run application
-app.run()
+app.run(host=app.config['HOST'])

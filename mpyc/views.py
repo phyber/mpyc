@@ -2,7 +2,6 @@
 
 import json
 import flask
-#import mpd
 import socket
 
 from mpyc import app
@@ -21,7 +20,7 @@ def jsonify(arg):
 
 @app.route("/", methods=['GET'])
 def index_view():
-	return flask.render_template("index.html")
+	return flask.redirect(flask.url_for('mpd_view'))
 
 @app.route("/mpd/", methods=['GET'])
 def mpd_view():
