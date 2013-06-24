@@ -1,0 +1,102 @@
+/*
+ * # = id
+ * . = class
+ */
+
+body {
+	background-color: black;
+	color: white;
+	font-family: monospace;
+}
+
+table {
+	width: 100%;
+	table-layout: fixed;
+}
+th {
+	color: yellow;
+	border-color: lightgrey;
+	border-bottom: solid thin;
+}
+
+td {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+td.track-time {
+	padding-right: 4px;
+}
+
+td.track-artist {
+}
+
+.track-album-color {
+	color: red;
+}
+.track-artist-color {
+	color: cyan;
+}
+.track-time-color {
+	color: lightgreen;
+}
+.track-time-padding {
+	padding: 4px;
+}
+.track-title-color {
+	color: yellow;
+}
+.track-current {
+	font-style: italic;
+	font-weight: bold;
+}
+
+.clearfloat {
+	clear: both;
+}
+
+#mpd-container {
+	/*margin: auto;*/
+}
+
+#mpd-playlist-stats {
+	text-align: center;
+}
+
+#mpd-status-container {
+}
+
+#mpd-status-left {
+	float: left;
+	text-align: left;
+	width: 25%;
+}
+
+#mpd-status-center {
+	float: left;
+	text-align: center;
+	width: 50%;
+}
+
+#mpd-status-right {
+	float: left;
+	text-align: right;
+	width: 25%;
+}
+
+#mpd-playlist-table {
+	border-collapse: collapse;
+	border-color: red;
+	margin: 0px;
+	padding: 0px;
+}
+
+#mpd-playlist-table th, td {
+	text-align: left;
+	padding: 0px;
+}
+
+.fullwidth hr {
+	width: 100%;
+}

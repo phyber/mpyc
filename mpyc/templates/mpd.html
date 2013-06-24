@@ -1,0 +1,39 @@
+{% include "header.html" %}
+		<script src="{{ url_for('static', filename='mpd.js') }}"></script>
+		<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='style.css') }}" title='Standard layout'/>
+	</head>
+	<body>
+		<div id="mpd-container">
+			<div id="mpd-status-container" class="mpd-status">
+				<div id="mpd-status-left">
+					<div id="mpd-current-time-text"></div>
+					<div id="mpd-status-text"></div>
+				</div>
+				<div id="mpd-status-center">
+					<div id="mpd-current-album-text"></div>
+					<div id="mpd-current-track-text"></div>
+				</div>
+				<div id="mpd-status-right">
+					<div id="mpd-volume-text"></div>
+					<div id="mpd-flags-text"></div>
+				</div>
+			</div>
+			<br class="clearfloat"/>
+			<hr/>
+			<div id="mpd-playlist-stats">
+				Playlist: (<span id="mpd-playlist-items-text"></span> items, length: <span id="mpd-playlist-length-text"></span>)
+			</div>
+			<hr class="clearfloat"/>
+			<div class="mpd-playlist">
+				<table id="mpd-playlist-table">
+					<tr>
+						<th class="table-header">Time</th>
+						<th class="table-header">Artist</th>
+						<th class="table-header">Title</th>
+						<th class="table-header">Album</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+{% include "footer.html" %}
