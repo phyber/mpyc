@@ -1,7 +1,7 @@
 mpyc
 ====
 
-Decrypt your Titanium Backup files on the command line.
+Web-based MPD client using Flask and associated gizmos.
 
 Requirements
 ------------
