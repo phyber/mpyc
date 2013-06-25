@@ -5,11 +5,32 @@ var SECS_SEC = 1;
 var DURATION_SECS = [SECS_DAY, SECS_HOUR, SECS_MIN, SECS_SEC];
 var DURATION_LONG_STR = ['d ', 'h ', 'm ', 's'];
 var DURATION_SHORT_STR = [':', ':', ':', ''];
+var MPD_STATE_PAUSE = 'pause';
+var MPD_STATE_PLAY = 'play';
+var MPD_STATE_STOP = 'stop';
 var MPD_STATES = {
+	'pause': 'paused',
 	'play': 'playing',
 	'stop': 'stopped',
-	'pause': 'paused',
 };
+
+// TODO: Make values private somehow.
+var cache = {
+	values: {},
+	// Returns undefined if we don't have that key,
+	// otherwise returns the value
+	get: function(key) {
+		if (key in this.values) {
+			return this.values[key];
+		}
+		return undefined;
+	},
+	// Returns the value that was set.
+	set: function(key, value) {
+		this.values[key] = value;
+		return value;
+	},
+}
 
 /*
  * Format a number of seconds in a nice readable format.
@@ -47,9 +68,8 @@ function mpd_currentsong_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	var current_pos = data['pos'];
-	$('#playlist-pos-' + current_pos).addClass('track-current');
-
+	cache.set('currentsong', data);
+	$('#playlist-pos-' + data['pos']).addClass('track-current');
 	$('#mpd-current-album-text').html(data['album']);
 	$('#mpd-current-artist-text').html(data['artist']);
 	$('#mpd-current-track-text').html(data['title']);
@@ -60,6 +80,7 @@ function mpd_playlistinfo_show(complete, data) {
 	if (!complete) {
 		return;
 	}
+	cache.set('playlistinfo', data);
 	var html = '';
 	var total_time = 0;
 	for (var i = 0; i < data.length; i++) {
@@ -94,6 +115,8 @@ function mpd_status_show(complete, data) {
 	if (!complete) {
 		return;
 	}
+	cache.set('status', data);
+
 	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
 
 	var volume_text = 'Vol: ';
@@ -110,7 +133,36 @@ function mpd_status_show(complete, data) {
 	$('#mpd-current-time-text').html(current_time_str);
 }
 
+/*
+ * Toggles between stop/pause and play status.
+ * stop -> play
+ * play -> pause
+ * pause -> play
+ */
+function mpd_toggle_state() {
+	var state = cache.get('status')['state'];
+	switch (state) {
+		case MPD_STATE_PLAY:
+		case MPD_STATE_PAUSE:
+			mpd_execute(MPD_STATE_PAUSE);
+			break;
+		case MPD_STATE_STOP:
+			mpd_execute(MPD_STATE_PLAY);
+			break;
+		default:
+			break;
+	}
+}
+
+function mpd_update_state(complete, data, arg) {
+
+}
+
 var mpd_command_handler = {
+	// Playback commands
+	'play': mpd_update_state,
+	'pause': mpd_update_state,
+	// Info commands
 	'currentsong': mpd_currentsong_show,
 	'playlistinfo': mpd_playlistinfo_show,
 	//'stats': mpd_stats_show,
