@@ -118,19 +118,6 @@ function mpd_playlistinfo_show(complete) {
 	$('#mpd-playlist-length-text').html(duration(total_time, true));
 }
 
-/*
-function mpd_stats_show(complete, data) {
-	if (!complete) {
-		return;
-	}
-	var html = 'Artists: '+ data['artists'] +'<br/>';
-	html += 'Albums: '+ data['albums'] +'<br/>';
-	html += 'Songs: '+ data['songs'] +'<br/>';
-	html += 'Playlist time: '+ duration(data['playtime'], true) +'<br/>';
-	$('#mpd-stats-text').html(html);
-}
-*/
-
 function mpd_status_show(complete) {
 	if (!complete) {
 		return;
@@ -186,18 +173,17 @@ var mpd_command_handler = {
 	// Info commands
 	'currentsong': mpd_currentsong_show,
 	'playlistinfo': mpd_playlistinfo_show,
-	//'stats': mpd_stats_show,
 	'status': mpd_status_show,
 };
 
-function mpd_execute(command) {
+function mpd_execute(command, arg) {
 	var handler = mpd_command_handler[command];
 	if (handler === undefined) {
 		return;
 	}
 	var req = {
 		url: '/mpd/'+command+'.json',
-		data: null,
+		data: arg,
 		type: 'GET',
 		cache: false,
 		dataType: 'json',
@@ -228,7 +214,6 @@ function mpd_execute(command) {
 }
 
 function mpd_get_info() {
-	//mpd_execute('stats');
 	mpd_execute('status');
 	mpd_execute('playlistinfo');
 }
