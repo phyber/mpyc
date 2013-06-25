@@ -13,6 +13,7 @@ var MPD_STATES = {
 	'play': 'playing',
 	'stop': 'stopped',
 };
+var TRACK_INFO = ['time', 'artist', 'title', 'album'];
 
 // TODO: Make values private somehow.
 var cache = {
@@ -81,19 +82,36 @@ function mpd_playlistinfo_show(complete, data) {
 		return;
 	}
 	cache.set('playlistinfo', data);
-	var html = '';
+
+	// Total playlist time in seconds.
 	var total_time = 0;
 	for (var i = 0; i < data.length; i++) {
 		var current = data[i];
 		total_time = total_time + parseInt(current['time']);
-		html += '<tr class="playlist-pos" id="playlist-pos-'+ current['pos'] +'">';
-		html += '<td class="track-time track-time-color">'+ duration(current['time']) +'</div>';
-		html += '<td class="track-artist track-artist-color">'+ current['artist'] +'</div>';
-		html += '<td class="track-title track-title-color">'+ current['title'] +'</div>';
-		html += '<td class="track-album track-album-color">'+ current['album'] +'</div>';
-		html += '</tr>';
+
+		// Create table row
+		var tr = document.createElement('tr');
+		$(tr).attr('id', 'playlist-pos-' + current['pos']).addClass("playlist-pos");
+
+		// Create table data for each element we're showing.
+		for (var j = 0; j < TRACK_INFO.length; j++) {
+			var type = TRACK_INFO[j];
+			var str;
+			if (type == 'time') {
+				str = duration(current[type]);
+			}
+			else {
+				str = current[type];
+			}
+
+			// Create the table data for this element and append it to the row.
+			var td = document.createElement('td');
+			$(td).addClass('track-' + type).addClass('track-' + type + '-color').html(str);
+			$(tr).append(td);
+		}
+
+		$('#mpd-playlist-table').append(tr);
 	}
-	$('#mpd-playlist-table').append(html);
 	$('#mpd-playlist-items-text').html(data.length);
 	$('#mpd-playlist-length-text').html(duration(total_time, true));
 }
