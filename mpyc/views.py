@@ -13,8 +13,15 @@ JSON_SEPARATORS = (',', ':')
 MPC = mpyc.mpdclient.MPC(app.config)
 
 def jsonify(arg):
-	return app.response_class(
-		flask.json.dumps(arg, separators=JSON_SEPARATORS),
+	# Provide an empty dict to jsonify if the command doesn't produce output.
+	if arg is None:
+		arg = {}
+	status_code = 200
+	if 'error' in arg:
+		status_code = 501
+	return flask.Response(
+		response=flask.json.dumps(arg, separators=JSON_SEPARATORS),
+		status=status_code,
 		mimetype='application/json'
 		)
 

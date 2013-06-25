@@ -5,6 +5,9 @@ import socket
 from mpyc.exceptions import InvalidCommand
 
 VALID_COMMANDS = (
+		# Control commands
+		'pause',
+		'play',
 		# Info commands
 		'currentsong',
 		'playlistinfo',

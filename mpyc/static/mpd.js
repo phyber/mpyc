@@ -65,10 +65,7 @@ function duration(secs, longFormat) {
 }
 
 // Highlights the current track in the playlist and displays current song info.
-function mpd_currentsong_show(complete) {
-	if (!complete) {
-		return;
-	}
+function mpd_currentsong_show() {
 	var data = cache.get('currentsong');
 	$('#playlist-pos-' + data['pos']).addClass('track-current');
 	$('#mpd-current-album-text').html(data['album']);
@@ -77,11 +74,7 @@ function mpd_currentsong_show(complete) {
 	$('#mpd-current-trackdate-text').html(data['date']);
 }
 
-function mpd_playlistinfo_show(complete) {
-	if (!complete) {
-		return;
-	}
-
+function mpd_playlistinfo_show() {
 	var data = cache.get('playlistinfo');
 
 	// Total playlist time in seconds.
@@ -118,11 +111,7 @@ function mpd_playlistinfo_show(complete) {
 	$('#mpd-playlist-length-text').html(duration(total_time, true));
 }
 
-function mpd_status_show(complete) {
-	if (!complete) {
-		return;
-	}
-
+function mpd_status_update() {
 	var data = cache.get('status');
 
 	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
@@ -162,18 +151,16 @@ function mpd_toggle_state() {
 	}
 }
 
-function mpd_update_state(complete, data, arg) {
-
-}
+function noop() {}
 
 var mpd_command_handler = {
 	// Playback commands
-	'play': mpd_update_state,
-	'pause': mpd_update_state,
+	'play': noop,
+	'pause': noop,
 	// Info commands
 	'currentsong': mpd_currentsong_show,
 	'playlistinfo': mpd_playlistinfo_show,
-	'status': mpd_status_show,
+	'status': mpd_status_update,
 };
 
 function mpd_execute(command, arg) {
@@ -187,12 +174,12 @@ function mpd_execute(command, arg) {
 		type: 'GET',
 		cache: false,
 		dataType: 'json',
-		beforeSend: function(data, textStatus, errorThrown) {
-			handler(false);
-		},
+		//beforeSend: function(data, textStatus, errorThrown) {
+		//	handler(false);
+		//},
 		success: function(data, textStatus, errorThrown) {
 			cache.set(command, data);
-			handler(true);
+			handler();
 		},
 		error: function(data, textStatus, errorThrown) {
 			alert("Aww: "+textStatus+": "+errorThrown);
@@ -205,6 +192,10 @@ function mpd_execute(command, arg) {
 				case "playlistinfo":
 					mpd_execute('currentsong');
 					break;
+				case "pause":
+				case "play":
+					mpd_execute('status');
+					break;
 				default:
 					break;
 			}
@@ -213,9 +204,14 @@ function mpd_execute(command, arg) {
 	$.ajax(req);
 }
 
-function mpd_get_info() {
-	mpd_execute('status');
-	mpd_execute('playlistinfo');
+function mpd_install_onclicks() {
+	$('#mpd-current-status-text').click(mpd_toggle_state);
 }
 
-$(document).ready(mpd_get_info);
+function mpd_prepare_page() {
+	mpd_execute('status');
+	mpd_execute('playlistinfo');
+	mpd_install_onclicks();
+}
+
+$(document).ready(mpd_prepare_page);
