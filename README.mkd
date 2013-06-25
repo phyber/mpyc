@@ -13,6 +13,17 @@ Requirements
   * python-mpd in Debian Wheezy.
 
 
+Configuration
+-------------
+
+Copy mpyc/default_settings.py to the top-level directory (same directory
+as runserver.py) as local.cfg. Change setting as needed.
+
+Running
+-------
+
+After configuration just run ./runserver.py in the top-level directory.
+
 Todo
 ----
 
