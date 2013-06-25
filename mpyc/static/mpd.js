@@ -50,8 +50,10 @@ function mpd_currentsong_show(complete, data) {
 	var current_pos = data['pos'];
 	$('#playlist-pos-' + current_pos).addClass('track-current');
 
-	$('#mpd-current-album-text').html('--| <span class="track-album-color">' + data['album'] + '</span> |--');
-	$('#mpd-current-track-text').html('<span class="track-artist-color">' + data['artist'] + '</span> - <span class="track-title-color">' + data['title'] + '</span> (' + data['date'] + ')');
+	$('#mpd-current-album-text').html(data['album']);
+	$('#mpd-current-artist-text').html(data['artist']);
+	$('#mpd-current-track-text').html(data['title']);
+	$('#mpd-current-trackdate-text').html(data['date']);
 }
 
 function mpd_playlistinfo_show(complete, data) {
@@ -75,6 +77,7 @@ function mpd_playlistinfo_show(complete, data) {
 	$('#mpd-playlist-length-text').html(duration(total_time, true));
 }
 
+/*
 function mpd_stats_show(complete, data) {
 	if (!complete) {
 		return;
@@ -85,12 +88,13 @@ function mpd_stats_show(complete, data) {
 	html += 'Playlist time: '+ duration(data['playtime'], true) +'<br/>';
 	$('#mpd-stats-text').html(html);
 }
+*/
 
 function mpd_status_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	$('#mpd-current-status-text').html('['+ MPD_STATES[data['state']] +']');
+	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
 
 	var volume_text = 'Vol: ';
 	if (data['volume'] == '-1') {
@@ -109,7 +113,7 @@ function mpd_status_show(complete, data) {
 var mpd_command_handler = {
 	'currentsong': mpd_currentsong_show,
 	'playlistinfo': mpd_playlistinfo_show,
-	'stats': mpd_stats_show,
+	//'stats': mpd_stats_show,
 	'status': mpd_status_show,
 };
 

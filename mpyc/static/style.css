@@ -68,11 +68,7 @@ td.track-artist {
 	display: block;
 }
 
-#mpd-current-track-text {
-	display: block;
-}
-
-#mpd-current-track-text {
+#mpd-current-track {
 	display: block;
 }
 
