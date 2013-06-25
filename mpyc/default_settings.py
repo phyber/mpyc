@@ -3,6 +3,7 @@
 DEBUG = False
 
 HOST = '0.0.0.0'
+PORT = None
 
 MPD_HOST = '127.0.0.1'
 MPD_PORT = 6000
