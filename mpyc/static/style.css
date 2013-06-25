@@ -19,6 +19,10 @@ th {
 	border-bottom: solid thin;
 }
 
+tr.track-current {
+	background-color: #444444;
+}
+
 td {
 	text-overflow: ellipsis;
 	white-space: nowrap;
