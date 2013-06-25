@@ -85,7 +85,8 @@ function mpd_playlistinfo_show() {
 
 		// Create table row
 		var tr = document.createElement('tr');
-		$(tr).attr('id', 'playlist-pos-' + current['pos']).addClass("playlist-pos");
+		$(tr).attr('id', 'playlist-pos-' + current['pos'])
+			.addClass("playlist-pos");
 
 		// Create table data for each element we're showing.
 		for (var j = 0; j < TRACK_INFO.length; j++) {
@@ -98,9 +99,13 @@ function mpd_playlistinfo_show() {
 				str = current[type];
 			}
 
-			// Create the table data for this element and append it to the row.
+			// Create the table data for this element and
+			// append it to the row.
 			var td = document.createElement('td');
-			$(td).addClass('track-' + type).addClass('track-' + type + '-color').html(str);
+			$(td).addClass('track-' + type)
+				.addClass('track-' + type + '-color')
+				.attr('title', str)
+				.html(str);
 			$(tr).append(td);
 		}
 
@@ -121,7 +126,7 @@ function mpd_status_update() {
 		volume_text += 'N/A';
 	}
 	else {
-		volume_text += data['volume'];
+		volume_text += data['volume'] + '%';
 	}
 	$('#mpd-volume-text').html(volume_text);
 
