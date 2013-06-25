@@ -1,7 +1,10 @@
-{% include "header.html" %}
+<html>
+	<head>
 		<title>MPyC</title>
-		<script src="{{ url_for('static', filename='mpd.js') }}"></script>
+		<link rel="shortcut icon" href="#"/>
 		<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='style.css') }}" title='Standard layout'/>
+		<script src="{{ url_for('static', filename='jquery-2.0.2.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='mpd.js') }}"></script>
 	</head>
 	<body>
 		<div id="mpd-container">
@@ -37,4 +40,4 @@
 			</div>
 		</div>
 	</body>
-{% include "footer.html" %}
+</html>
