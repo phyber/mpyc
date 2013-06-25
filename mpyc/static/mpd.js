@@ -69,7 +69,6 @@ function mpd_currentsong_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	cache.set('currentsong', data);
 	$('#playlist-pos-' + data['pos']).addClass('track-current');
 	$('#mpd-current-album-text').html(data['album']);
 	$('#mpd-current-artist-text').html(data['artist']);
@@ -81,7 +80,6 @@ function mpd_playlistinfo_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	cache.set('playlistinfo', data);
 
 	// Total playlist time in seconds.
 	var total_time = 0;
@@ -110,6 +108,7 @@ function mpd_playlistinfo_show(complete, data) {
 			$(tr).append(td);
 		}
 
+		// Add row to table.
 		$('#mpd-playlist-table').append(tr);
 	}
 	$('#mpd-playlist-items-text').html(data.length);
@@ -133,7 +132,6 @@ function mpd_status_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	cache.set('status', data);
 
 	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
 
@@ -202,6 +200,7 @@ function mpd_execute(command) {
 			handler(false, 'Fetching');
 		},
 		success: function(data, textStatus, errorThrown) {
+			cache.set(command, data);
 			handler(true, data);
 		},
 		error: function(data, textStatus, errorThrown) {
