@@ -65,10 +65,11 @@ function duration(secs, longFormat) {
 }
 
 // Highlights the current track in the playlist and displays current song info.
-function mpd_currentsong_show(complete, data) {
+function mpd_currentsong_show(complete) {
 	if (!complete) {
 		return;
 	}
+	var data = cache.get('currentsong');
 	$('#playlist-pos-' + data['pos']).addClass('track-current');
 	$('#mpd-current-album-text').html(data['album']);
 	$('#mpd-current-artist-text').html(data['artist']);
@@ -76,10 +77,12 @@ function mpd_currentsong_show(complete, data) {
 	$('#mpd-current-trackdate-text').html(data['date']);
 }
 
-function mpd_playlistinfo_show(complete, data) {
+function mpd_playlistinfo_show(complete) {
 	if (!complete) {
 		return;
 	}
+
+	var data = cache.get('playlistinfo');
 
 	// Total playlist time in seconds.
 	var total_time = 0;
@@ -128,10 +131,12 @@ function mpd_stats_show(complete, data) {
 }
 */
 
-function mpd_status_show(complete, data) {
+function mpd_status_show(complete) {
 	if (!complete) {
 		return;
 	}
+
+	var data = cache.get('status');
 
 	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
 
@@ -197,11 +202,11 @@ function mpd_execute(command) {
 		cache: false,
 		dataType: 'json',
 		beforeSend: function(data, textStatus, errorThrown) {
-			handler(false, 'Fetching');
+			handler(false);
 		},
 		success: function(data, textStatus, errorThrown) {
 			cache.set(command, data);
-			handler(true, data);
+			handler(true);
 		},
 		error: function(data, textStatus, errorThrown) {
 			alert("Aww: "+textStatus+": "+errorThrown);
