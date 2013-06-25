@@ -27,4 +27,7 @@ After configuration just execute `runserver.py` in the top-level directory.
 Todo
 ----
 
- * Make it not-terrible.
+ * Track time should progress.
+ * Current track should be updated as playlist progresses.
+ * Double-clicking a track in the playlist should play that track.
+ * Track position display at foot of page.
