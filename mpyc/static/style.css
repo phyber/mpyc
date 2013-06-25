@@ -60,6 +60,30 @@ td.track-artist {
 	/*margin: auto;*/
 }
 
+#mpd-current-status-text {
+	display: block;
+}
+
+#mpd-current-time-text {
+	display: block;
+}
+
+#mpd-current-track-text {
+	display: block;
+}
+
+#mpd-current-track-text {
+	display: block;
+}
+
+#mpd-volume-text {
+	display: block;
+}
+
+#mpd-flags-text {
+	display: block;
+}
+
 #mpd-playlist-stats {
 	text-align: center;
 }

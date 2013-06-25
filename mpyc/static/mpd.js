@@ -11,6 +11,11 @@ var MPD_STATES = {
 	'pause': 'paused',
 };
 
+/*
+ * Format a number of seconds in a nice readable format.
+ * Long format: 3d 4h 27m 6s
+ * Short format: 3:04:27:06
+ */
 function duration(secs, longFormat) {
 	var str = '';
 	for (var i in DURATION_SECS) {
@@ -24,7 +29,7 @@ function duration(secs, longFormat) {
 			str += show ? num + DURATION_LONG_STR[i] : '';
 		}
 		else {
-			// Pad with a zero.
+			// Pad with a leading zero if it's no the 'days' value
 			if (i > 0 && num < 10) {
 				num = '0' + num;
 			}
@@ -60,8 +65,6 @@ function mpd_playlistinfo_show(complete, data) {
 		total_time = total_time + parseInt(current['time']);
 		html += '<tr class="playlist-pos" id="playlist-pos-'+ current['pos'] +'">';
 		html += '<td class="track-time track-time-color">'+ duration(current['time']) +'</div>';
-		//html += '<td class="track-artist track-artist-color">'+ current['artist'].substring(0, 32) +'</div>';
-		//html += '<td class="track-title track-title-color">'+ current['title'].substring(0, 64) +'</div>';
 		html += '<td class="track-artist track-artist-color">'+ current['artist'] +'</div>';
 		html += '<td class="track-title track-title-color">'+ current['title'] +'</div>';
 		html += '<td class="track-album track-album-color">'+ current['album'] +'</div>';
@@ -87,7 +90,7 @@ function mpd_status_show(complete, data) {
 	if (!complete) {
 		return;
 	}
-	$('#mpd-status-text').html('['+ MPD_STATES[data['state']] +']');
+	$('#mpd-current-status-text').html('['+ MPD_STATES[data['state']] +']');
 
 	var volume_text = 'Vol: ';
 	if (data['volume'] == '-1') {
@@ -133,6 +136,8 @@ function mpd_execute(command) {
 		complete: function(data, textStatus, errorThrown) {
 			// Some commands need followups. Like the playlistinfo command.
 			switch (command) {
+				// Follow up 'playlistinfo' command with 'currentsong' to highlight the 
+				// currently playing song in the playlist.
 				case "playlistinfo":
 					mpd_execute('currentsong');
 					break;
