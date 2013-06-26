@@ -303,12 +303,14 @@ function mpd_prepare_page() {
 	mpd_install_onclicks();
 	// Causes an issue where it keeps reloading over and over.
 	$.hurl({
-		'monitor': true,
+	//	'monitor': true,
 	});
 	$('body').bind('hurl', function() {
 		console.log("hurl event detected.");
 		mpd_playlist_set_visible_page();
 	});
+	// hurl monitor is insane. let's do something simpler
+	window.addEventListener('hashchange', mpd_playlist_set_visible_page);
 }
 
 $(document).ready(mpd_prepare_page);
