@@ -6,6 +6,7 @@
 		<link rel="shortcut icon" href="#"/>
 		<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='style.css') }}" title='Standard layout'/>
 		<script src="{{ url_for('static', filename='jquery-2.0.2.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='jquery.hurl.js') }}"></script>
 		<script src="{{ url_for('static', filename='mpd.js') }}"></script>
 	</head>
 	<body>
@@ -34,7 +35,7 @@
 			<hr class="clearfloat"/>
 			<div id="mpd-playlist">
 				<table id="mpd-playlist-table">
-					<thead>
+					 <thead id="mpd-playlist-table-head">
 						<tr>
 							<th class="table-header">Time</th>
 							<th class="table-header">Artist</th>
@@ -46,7 +47,7 @@
 			</div> <!-- mpd-playlist -->
 		</div> <!-- mpd-container -->
 		<div id="mpd-footer">
-			<span id="previous-page">&lt;-- Previous</span><span id="next-page">Next --&gt;</span>
+			<span id="prev-page">&lt;-- Previous</span><span id="next-page">Next --&gt;</span>
 		</div> <!-- mpd-footer -->
 	</body>
 </html>

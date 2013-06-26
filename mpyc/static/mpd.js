@@ -65,8 +65,10 @@ function duration(secs, longFormat) {
 	return str;
 }
 
+
 // Highlights the current track in the playlist and displays current song info.
 function mpd_currentsong_show() {
+	console.log("mpd_currentsong_show();");
 	var data = cache.get('currentsong');
 	$('#playlist-pos-' + data['pos']).addClass('track-current');
 	$('#mpd-current-album-text').html(data['album']);
@@ -76,15 +78,16 @@ function mpd_currentsong_show() {
 }
 
 function mpd_playlistinfo_show() {
+	console.log("mpd_playlist_show();");
 	var data = cache.get('playlistinfo');
 
 	// Total playlist time in seconds.
-	var total_time = 0;
+	var total_time_secs = 0;
 	var tbody;
 	var playlist_page = 1;
 	for (var i = 0; i < data.length; i++) {
 		var current = data[i];
-		total_time = total_time + parseInt(current['time']);
+		total_time_secs = total_time_secs + parseInt(current['time']);
 
 		// Create table row
 		var tr = document.createElement('tr');
@@ -112,14 +115,16 @@ function mpd_playlistinfo_show() {
 			$(tr).append(td);
 		}
 
+
 		// Add row to table.
 		// Tbody grouping, TBODY_ROWS rows per tbody
 		// Always make a fresh tbody when starting.
+		// Work out visibility of page
 		if (i == 0) {
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
-				.css('visibility', 'visible')
-				.css('display', 'table-row-group');
+				.css('visibility', 'hidden')
+				.css('display', 'none');
 			$('#mpd-playlist-table').append(tbody);
 		}
 		else if ((i % TBODY_ROWS) == 0) {
@@ -131,14 +136,16 @@ function mpd_playlistinfo_show() {
 			$('#mpd-playlist-table').append(tbody);
 		}
 
-		//$('#mpd-playlist-table').append(tr);
+		// Append row to the tbody.
 		$('#mpd-playlist-page-' + playlist_page).append(tr);
 	}
+	mpd_playlist_set_visible_page();
 	$('#mpd-playlist-items-text').html(data.length);
-	$('#mpd-playlist-length-text').html(duration(total_time, true));
+	$('#mpd-playlist-length-text').html(duration(total_time_secs, true));
 }
 
 function mpd_status_update() {
+	console.log("mpd_update_status();");
 	var data = cache.get('status');
 
 	$('#mpd-current-status-text').html('[' + MPD_STATES[data['state']] +']');
@@ -164,6 +171,7 @@ function mpd_status_update() {
  * pause -> play
  */
 function mpd_toggle_state() {
+	console.log("mpd_toggle_state();");
 	var state = cache.get('status')['state'];
 	switch (state) {
 		case MPD_STATE_PLAY:
@@ -231,14 +239,76 @@ function mpd_execute(command, arg) {
 	$.ajax(req);
 }
 
+function mpd_playlist_set_visible_page() {
+	console.log("mpd_playlist_set_visible_page();");
+	var page_number = parseInt($('body').data('hurl').link['page']);
+	if (!page_number) {
+		page_number = 1;
+	}
+	var playlistinfo = cache.get('playlistinfo');
+	if (!playlistinfo) {
+		return;
+	}
+	var total_pages = Math.ceil(playlistinfo.length / TBODY_ROWS);
+	for (var i = 1; i <= total_pages; i++) {
+		if (i != page_number) {
+			$('#mpd-playlist-page-' + i)
+				.css('display', 'none')
+				.css('visibility', 'hidden');
+		}
+		else {
+			$('#mpd-playlist-page-' + i)
+				.css('display', 'table-row-group')
+				.css('visibility', 'visible');
+		}
+	}
+	if (page_number < total_pages) {
+		$('#next-page').css('visibility', 'visible');
+	}
+	else {
+		$('#next-page').css('visibility', 'hidden');
+	}
+	if (page_number > 1) {
+		$('#prev-page').css('visibility', 'visible');
+	}
+	else {
+		$('#prev-page').css('visibility', 'hidden');
+	}
+}
+
+function mpd_playlist_set_page(event) {
+	var current_page = parseInt($('body').data('hurl').link['page']);
+	if (!current_page) {
+		current_page = 1;
+	}
+	var new_page = current_page;
+	if (event.data.type == 'prev') {
+		new_page -= 1;
+	}
+	else {
+		new_page += 1;
+	}
+	$.hurl('update', {'page': new_page});
+}
+
 function mpd_install_onclicks() {
 	$('#mpd-current-status-text').click(mpd_toggle_state);
+	$('#next-page').click({'type': 'next'}, mpd_playlist_set_page);
+	$('#prev-page').click({'type': 'prev'}, mpd_playlist_set_page);
 }
 
 function mpd_prepare_page() {
 	mpd_execute('status');
 	mpd_execute('playlistinfo');
 	mpd_install_onclicks();
+	// Causes an issue where it keeps reloading over and over.
+	$.hurl({
+		'monitor': true,
+	});
+	$('body').bind('hurl', function() {
+		console.log("hurl event detected.");
+		mpd_playlist_set_visible_page();
+	});
 }
 
 $(document).ready(mpd_prepare_page);
