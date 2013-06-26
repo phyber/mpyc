@@ -14,6 +14,7 @@ var MPD_STATES = {
 	'stop': 'stopped',
 };
 var TRACK_INFO = ['time', 'artist', 'title', 'album'];
+var TBODY_ROWS = 50;
 
 // TODO: Make values private somehow.
 var cache = {
@@ -79,6 +80,8 @@ function mpd_playlistinfo_show() {
 
 	// Total playlist time in seconds.
 	var total_time = 0;
+	var tbody;
+	var playlist_page = 1;
 	for (var i = 0; i < data.length; i++) {
 		var current = data[i];
 		total_time = total_time + parseInt(current['time']);
@@ -110,7 +113,26 @@ function mpd_playlistinfo_show() {
 		}
 
 		// Add row to table.
-		$('#mpd-playlist-table').append(tr);
+		// Tbody grouping, TBODY_ROWS rows per tbody
+		// Always make a fresh tbody when starting.
+		if (i == 0) {
+			tbody = document.createElement('tbody');
+			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.css('visibility', 'visible')
+				.css('display', 'table-row-group');
+			$('#mpd-playlist-table').append(tbody);
+		}
+		else if ((i % TBODY_ROWS) == 0) {
+			playlist_page += 1;
+			tbody = document.createElement('tbody');
+			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.css('visibility', 'hidden')
+				.css('display', 'none');
+			$('#mpd-playlist-table').append(tbody);
+		}
+
+		//$('#mpd-playlist-table').append(tr);
+		$('#mpd-playlist-page-' + playlist_page).append(tr);
 	}
 	$('#mpd-playlist-items-text').html(data.length);
 	$('#mpd-playlist-length-text').html(duration(total_time, true));

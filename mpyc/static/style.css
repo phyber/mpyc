@@ -13,6 +13,10 @@ table {
 	width: 100%;
 	table-layout: fixed;
 }
+tbody {
+	width: 100%;
+	table-layout: fixed;
+}
 th {
 	color: yellow;
 	border-color: lightgrey;
@@ -84,6 +88,9 @@ td.track-artist {
 	display: block;
 }
 
+#mpd-footer {
+}
+
 #mpd-playlist-stats {
 	text-align: center;
 }
@@ -119,8 +126,14 @@ td.track-artist {
 #mpd-playlist-table th, td {
 	text-align: left;
 	padding: 0px;
+	padding-right: 4px;
 }
 
-.fullwidth hr {
-	width: 100%;
+#previous-page {
+	float: left;
+	visibility: hidden;
+}
+#next-page {
+	float: right;
+	visibility: hidden;
 }
