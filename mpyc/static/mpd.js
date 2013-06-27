@@ -266,7 +266,7 @@ function mpd_playlist_set_visible_page() {
 		$('#prev-page').css('visibility', 'hidden');
 	}
 	// Hide all pages.
-	$('.mpd-playlist-page')
+	$('.mpd-playlist-page-visible')
 		.removeClass('mpd-playlist-page-visible')
 		.addClass('mpd-playlist-page-hidden');
 	// Show the page that we want to see.
