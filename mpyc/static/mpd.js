@@ -245,6 +245,7 @@ function mpd_playlist_set_visible_page() {
 	if (!page_number) {
 		page_number = 1;
 	}
+	console.log(page_number);
 	var playlistinfo = cache.get('playlistinfo');
 	if (!playlistinfo) {
 		return;
@@ -301,16 +302,15 @@ function mpd_prepare_page() {
 	mpd_execute('status');
 	mpd_execute('playlistinfo');
 	mpd_install_onclicks();
-	// Causes an issue where it keeps reloading over and over.
+	// Monitor causes an issue where it keeps reloading over and over.
+	// So we're just using hurl to parse location.hash and not much else.
 	$.hurl({
-	//	'monitor': true,
+		'monitor': false,
 	});
-	$('body').bind('hurl', function() {
-		console.log("hurl event detected.");
+	$(window).bind('hashchange', function () {
+		$.hurl("parse");
 		mpd_playlist_set_visible_page();
 	});
-	// hurl monitor is insane. let's do something simpler
-	window.addEventListener('hashchange', mpd_playlist_set_visible_page);
 }
 
 $(document).ready(mpd_prepare_page);
