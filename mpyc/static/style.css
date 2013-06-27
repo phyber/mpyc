@@ -131,12 +131,10 @@ td.track-artist {
 
 .mpd-playlist-page-hidden {
 	display: none;
-	visibility: hidden;
 }
 
 .mpd-playlist-page-visible {
 	display: table-row-group;
-	visibility: visible;
 }
 
 #prev-page {
