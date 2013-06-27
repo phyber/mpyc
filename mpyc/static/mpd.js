@@ -123,6 +123,7 @@ function mpd_playlistinfo_show() {
 		if (i == 0) {
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.data({page: playlist_page})
 				.css('visibility', 'hidden')
 				.css('display', 'none');
 			$('#mpd-playlist-table').append(tbody);
@@ -131,6 +132,7 @@ function mpd_playlistinfo_show() {
 			playlist_page += 1;
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.data({page: playlist_page})
 				.css('visibility', 'hidden')
 				.css('display', 'none');
 			$('#mpd-playlist-table').append(tbody);
