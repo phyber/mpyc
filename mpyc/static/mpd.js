@@ -162,8 +162,10 @@ function mpd_status_update() {
 	$('#mpd-volume-text').html(volume_text);
 
 	var times = data['time'].split(':');
-	var current_time_str = duration(times[0]) + '/' + duration(times[1]);
-	$('#mpd-current-time-text').html(current_time_str);
+	var current_tracktime_str = duration(times[0]);
+	var current_total_tracktime_str = duration(times[1]);
+	$('#mpd-current-tracktime-text').html(current_tracktime_str);
+	$('#mpd-current-total-tracktime-text').html(current_total_tracktime_str);
 }
 
 /*
@@ -309,6 +311,15 @@ function mpd_prepare_page() {
 		$.hurl("parse");
 		mpd_playlist_set_visible_page();
 	});
+	// Repeating function to update track time
+	/*
+	(function update_track_time() {
+		//
+		setTimeout(function() {
+			update_track_time();
+		}, 1000);
+	})();
+	*/
 }
 
 $(document).ready(mpd_prepare_page);
