@@ -245,7 +245,6 @@ function mpd_playlist_set_visible_page() {
 	if (!page_number) {
 		page_number = 1;
 	}
-	console.log(page_number);
 	var playlistinfo = cache.get('playlistinfo');
 	if (!playlistinfo) {
 		return;
