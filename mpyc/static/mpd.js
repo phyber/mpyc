@@ -109,16 +109,15 @@ function mpd_playlistinfo_show() {
 			var td = document.createElement('td');
 			$(td).addClass('track-' + type)
 				.addClass('track-' + type + '-color')
+				// Title attribute controls mouseover text.
 				.attr('title', str)
 				.html(str);
 			$(tr).append(td);
 		}
 
-
 		// Add row to table.
 		// Tbody grouping, TBODY_ROWS rows per tbody
 		// Always make a fresh tbody when starting.
-		// Work out visibility of page
 		if (i == 0) {
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
@@ -253,6 +252,7 @@ function mpd_playlist_set_visible_page() {
 		return;
 	}
 	var total_pages = Math.ceil(playlistinfo.length / TBODY_ROWS);
+	// TODO: Simplify this.
 	if (page_number < total_pages) {
 		$('#next-page').css('visibility', 'visible');
 	}
