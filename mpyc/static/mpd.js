@@ -65,7 +65,6 @@ function duration(secs, longFormat) {
 	return str;
 }
 
-
 // Highlights the current track in the playlist and displays current song info.
 function mpd_currentsong_show() {
 	console.log("mpd_currentsong_show();");
@@ -123,18 +122,20 @@ function mpd_playlistinfo_show() {
 		if (i == 0) {
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.addClass('mpd-playlist-page')
+				.addClass('mpd-playlist-page-hidden')
 				.data({page: playlist_page})
-				.css('visibility', 'hidden')
-				.css('display', 'none');
+				;
 			$('#mpd-playlist-table').append(tbody);
 		}
 		else if ((i % TBODY_ROWS) == 0) {
 			playlist_page += 1;
 			tbody = document.createElement('tbody');
 			$(tbody).attr('id', 'mpd-playlist-page-' + playlist_page)
+				.addClass('mpd-playlist-page')
+				.addClass('mpd-playlist-page-hidden')
 				.data({page: playlist_page})
-				.css('visibility', 'hidden')
-				.css('display', 'none');
+				;
 			$('#mpd-playlist-table').append(tbody);
 		}
 
@@ -252,18 +253,6 @@ function mpd_playlist_set_visible_page() {
 		return;
 	}
 	var total_pages = Math.ceil(playlistinfo.length / TBODY_ROWS);
-	for (var i = 1; i <= total_pages; i++) {
-		if (i != page_number) {
-			$('#mpd-playlist-page-' + i)
-				.css('display', 'none')
-				.css('visibility', 'hidden');
-		}
-		else {
-			$('#mpd-playlist-page-' + i)
-				.css('display', 'table-row-group')
-				.css('visibility', 'visible');
-		}
-	}
 	if (page_number < total_pages) {
 		$('#next-page').css('visibility', 'visible');
 	}
@@ -276,6 +265,14 @@ function mpd_playlist_set_visible_page() {
 	else {
 		$('#prev-page').css('visibility', 'hidden');
 	}
+	// Hide all pages.
+	$('.mpd-playlist-page')
+		.removeClass('mpd-playlist-page-visible')
+		.addClass('mpd-playlist-page-hidden');
+	// Show the page that we want to see.
+	$('#mpd-playlist-page-' + page_number)
+		.removeClass('mpd-playlist-page-hidden')
+		.addClass('mpd-playlist-page-visible');
 }
 
 function mpd_playlist_set_page(event) {

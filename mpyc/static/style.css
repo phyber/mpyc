@@ -129,6 +129,16 @@ td.track-artist {
 	padding-right: 4px;
 }
 
+.mpd-playlist-page-hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.mpd-playlist-page-visible {
+	display: table-row-group;
+	visibility: visible;
+}
+
 #prev-page {
 	float: left;
 	visibility: hidden;
