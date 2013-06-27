@@ -2,7 +2,6 @@
 
 import json
 import flask
-import socket
 
 from mpyc import app
 from mpyc.exceptions import InvalidCommand
