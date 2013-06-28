@@ -6,10 +6,11 @@ JSON_SEPARATORS = (',', ':')
 
 def jsonify(arg):
 	"""
-	Produces JSON output based on the given argument.
+	Return a flask.Response with the JSONified arg and appropriate
+	mimetype.
+
 	If the argument is None (command producing the arg didn't
 	produce output, create an empty dict for returning to the frontend.
-	Returns a flask.Response() to the caller.
 	"""
 	if arg is None:
 		arg = {}
