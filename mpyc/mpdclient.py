@@ -17,6 +17,11 @@ VALID_COMMANDS = (
 		)
 
 class MPC:
+	"""
+	MPD client class.
+
+	>>> mpc = MPC(app.config)
+	"""
 	def __init__(self, config):
 		self._host = config['MPD_HOST']
 		self._port = config['MPD_PORT']
@@ -27,6 +32,9 @@ class MPC:
 		"""
 		Connect to MPD using the credentials the class was initialized
 		with.
+
+		>>> connect()
+		True
 
 		Returns True on success and False on any error.
 		"""
@@ -55,6 +63,8 @@ class MPC:
 		"""
 		Execute a command on the MPD.
 
+		Connects to MPD if necessary.
+
 		Given commands are checked against the VALID_COMMANDS tuple.
 		mpyc.exceptions.InvalidCommand is raised if it's not a
 		valid command.
@@ -62,7 +72,7 @@ class MPC:
 		If the command is valid, it's passed to MPD and the results
 		returned to the caller.
 
-		>> execute('stats')
+		>>> execute('stats')
 		{"uptime":"3700562","db_update":"1370545488",,...}
 		"""
 		if self._client is None:
