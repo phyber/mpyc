@@ -34,7 +34,7 @@ def mpd_command(mpd_command):
 		data = MPC.execute(mpd_command)
 	except InvalidCommand as e:
 		error = {'error': e.msg}
-		return jsonify(error)
+		return mpyc.utils.jsonify(error)
 	except Exception as e:
 		return "Fail: {}".format(e)
 	return mpyc.utils.jsonify(data)
