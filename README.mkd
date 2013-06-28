@@ -31,3 +31,4 @@ Todo
  * Current track should be updated as playlist progresses.
  * Double-clicking a track in the playlist should play that track.
  * Track position display at foot of page.
+ * MPD client should be implemented as a Flask extension.
