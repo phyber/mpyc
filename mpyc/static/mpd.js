@@ -226,8 +226,8 @@ function mpd_execute(command, arg) {
 		complete: function(data, textStatus, errorThrown) {
 			// Some commands need followups. Like the playlistinfo command.
 			switch (command) {
-				// Follow up 'playlistinfo' command with 'currentsong' to highlight the 
-				// currently playing song in the playlist.
+				// Follow up 'playlistinfo' command with 'currentsong' to
+				// highlight the currently playing song in the playlist.
 				case "playlistinfo":
 					mpd_execute('currentsong');
 					break;
@@ -292,8 +292,14 @@ function mpd_playlist_set_page(event) {
 	$.hurl('update', {'page': new_page});
 }
 
+function mpd_focus_current_track_page() {
+	var page = $('.track-current').parent().data()['page'];
+	$.hurl('update', {'page': page});
+}
+
 function mpd_install_onclicks() {
 	$('#mpd-current-status-text').click(mpd_toggle_state);
+	$('#mpd-current-track').click(mpd_focus_current_track_page);
 	$('#next-page').click({'type': 'next'}, mpd_playlist_set_page);
 	$('#prev-page').click({'type': 'prev'}, mpd_playlist_set_page);
 }
