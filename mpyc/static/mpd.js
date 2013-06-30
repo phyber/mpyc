@@ -70,6 +70,7 @@ var mpd = (function() {
 	function mpd_currentsong_show() {
 		console.log("mpd_currentsong_show();");
 		var data = cache.get('currentsong');
+		$('.track-current').removeClass('track-current');
 		$('#playlist-pos-' + data['pos']).addClass('track-current');
 		$('#mpd-current-album-text').html(data['album']);
 		$('#mpd-current-artist-text').html(data['artist']);
