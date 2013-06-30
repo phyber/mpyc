@@ -17,23 +17,20 @@ var mpd = (function() {
 	var TRACK_INFO = ['time', 'artist', 'title', 'album'];
 	var TBODY_ROWS = 50;
 
-	// TODO: Make values private somehow.
-	var cache = {
-		values: {},
+	var cache = (function() {
+		var values = {};
 		// Returns undefined if we don't have that key,
 		// otherwise returns the value
-		get: function(key) {
-			if (key in this.values) {
-				return this.values[key];
-			}
-			return undefined;
-		},
-		// Returns the value that was set.
-		set: function(key, value) {
-			this.values[key] = value;
-			return value;
-		},
-	}
+		return {
+			get: function(key) {
+				return values[key];
+			},
+			// Returns the value that was set.
+			set: function(key, value) {
+				values[key] = value;
+			},
+		};
+	})();
 
 	/*
 	 * Format a number of seconds in a nice readable format.
