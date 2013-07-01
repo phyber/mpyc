@@ -5,10 +5,10 @@
 DEBUG = False
 
 # IP address and port that the app server should listen on.
-HOST = '0.0.0.0'
+HOST = "0.0.0.0"
 PORT = None
 
 # MPD connection details.
-MPD_HOST = '127.0.0.1'
-MPD_PORT = 6000
+MPD_HOST = "${settings:mpdhost}"
+MPD_PORT = ${settings:mpdport}
 MPD_PASS = None
