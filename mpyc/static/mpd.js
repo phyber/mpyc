@@ -251,6 +251,10 @@ var mpd = (function() {
 			complete: function(data, textStatus, errorThrown) {
 				// Some commands need followups. Like the playlistinfo command.
 				switch (command) {
+					// Focus the current page after getting currentsong info.
+					case "currentsong":
+						mpd_focus_current_track_page();
+						break;
 					// Follow up 'playlistinfo' command with 'currentsong' to
 					// highlight the currently playing song in the playlist.
 					case "playlistinfo":
