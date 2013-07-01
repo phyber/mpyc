@@ -17,6 +17,32 @@ var mpd = (function() {
 	var TRACK_INFO = ['time', 'artist', 'title', 'album'];
 	var TBODY_ROWS = 50;
 
+	// MPD idle states
+	var MPD_IDLE_DATABASE = 'database';
+	var MPD_IDLE_MESSAGE = 'message';
+	var MPD_IDLE_MIXER = 'mixer';
+	var MPD_IDLE_OPTIONS = 'options';
+	var MPD_IDLE_OUTPUT = 'output';
+	var MPD_IDLE_PLAYER = 'player';
+	var MPD_IDLE_PLAYLIST = 'playlist';
+	var MPD_IDLE_STICKER = 'sticker';
+	var MPD_IDLE_STORED_PLAYLIST = 'stored_playlist';
+	var MPD_IDLE_SUBSCRIPTION = 'subscription';
+	var MPD_IDLE_UPDATE = 'update';
+
+	// HTML5 SSE source
+	var sse_source = new EventSource('/mpd/info_stream');
+	sse_source.onmessage = function(event) {
+		switch (event.data) {
+			case MPD_IDLE_PLAYER:
+				// This event is useds so that the playlist follows the currently active track
+				mpd_execute('currentsong');
+				break;
+			default:
+				break;
+		}
+	};
+
 	var cache = (function() {
 		var values = {};
 		// Returns undefined if we don't have that key,

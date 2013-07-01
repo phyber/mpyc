@@ -42,5 +42,16 @@ def mpd_info_stream():
 	Handles /mpd/info_stream GET requests.
 	Returns a HTML5 text/event-stream stream.
 	"""
-	return flask.Response(mpyc.utils.event_stream(),
+	def event_stream():
+		"""
+		Yields events from MPD's 'idle' command, allowing the front-end
+		to auto-update.
+		"""
+		# Outside of a request we have to get the context
+		with app.app_context():
+			for message in mpd.execute('idle'):
+				print("MPD Idle delivered: {}".format(message))
+				yield 'data: {}\n\n'.format(message)
+
+	return flask.Response(event_stream(),
 			mimetype='text/event-stream')
