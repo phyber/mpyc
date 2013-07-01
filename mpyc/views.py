@@ -35,3 +35,12 @@ def mpd_command(mpd_command):
 	except Exception as e:
 		return "Fail: {}".format(e)
 	return mpyc.utils.jsonify(data)
+
+@app.route("/mpd/info_stream")
+def mpd_info_stream():
+	"""
+	Handles /mpd/info_stream GET requests.
+	Returns a HTML5 text/event-stream stream.
+	"""
+	return flask.Response(mpyc.utils.event_stream(),
+			mimetype='text/event-stream')
