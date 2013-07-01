@@ -11,6 +11,7 @@ Requirements
   * python-flask in Debian.
  * [python-mpd](http://jatreuman.indefero.net/p/python-mpd/)
   * python-mpd in Debian.
+ * [Flask-MPD](https://github.com/phyber/flask_mpd)
  * [jQuery](http://jquery.com) and the [jQuery-hURL](https://github.com/makesites/jquery-hurl/) plugins are also in use, they are included in the repository.
 
 Configuration
