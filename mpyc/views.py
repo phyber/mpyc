@@ -1,13 +1,10 @@
 #!/usr/bin/python
 
 import flask
-
 from mpyc import app
-from mpyc.exceptions import InvalidCommand
-import mpyc.mpdclient
+from mpyc import mpd
 import mpyc.utils
-
-MPC = mpyc.mpdclient.MPC(app.config)
+from flask.ext.mpd.exceptions import InvalidCommand
 
 @app.route("/", methods=['GET'])
 def index_view():
@@ -31,7 +28,7 @@ def mpd_command(mpd_command):
 	and returned.
 	"""
 	try:
-		data = MPC.execute(mpd_command)
+		data = mpd.execute(mpd_command)
 	except InvalidCommand as e:
 		error = {'error': e.msg}
 		return mpyc.utils.jsonify(error)
