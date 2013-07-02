@@ -37,6 +37,8 @@ var mpd = (function() {
 			case MPD_IDLE_PLAYER:
 				// This event is useds so that the playlist follows the currently active track
 				mpd_execute('currentsong');
+				// Tracktime/player status also needs updating.
+				mpd_execute('status');
 				break;
 			default:
 				break;
