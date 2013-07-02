@@ -33,17 +33,41 @@ var mpd = (function() {
 	// HTML5 SSE source
 	var sse_source = new EventSource('/mpd/info_stream');
 	sse_source.onmessage = function(event) {
-		var json = jQuery.parseJSON(event.data);
-		switch (event.data) {
-			case MPD_IDLE_PLAYER:
-				// This event is useds so that the playlist follows the currently active track
-				mpd_execute('currentsong');
-				// Tracktime/player status also needs updating.
-				mpd_execute('status');
-				break;
-			default:
-				break;
+		try {
+			var json = $.parseJSON(event.data);
 		}
+		catch (e) {
+			console.log(e);
+			return;
+		}
+		for (var subsystem in json) {
+			if (!json.hasOwnProperty(subsystem)) {
+				continue;
+			}
+			switch (subsystem) {
+				case MPD_IDLE_PLAYER:
+					var data = json[subsystem];
+					// Loop over data and set appropriate caches.
+					for (var command in data) {
+						if (!data.hasOwnProperty(command)) {
+							continue;
+						}
+						// Update cache with data that was returned from server.
+						// Allows us to update page without requesting .json again
+						cache.set(command, data[command]);
+						// Execute command handlers to update page after setting new cache
+						var handler = mpd_command_handler[command];
+						if (handler) {
+							handler();
+						}
+					}
+					mpd_currentsong_update();
+					mpd_status_update();
+					break;
+				default:
+					break;
+				} // switch
+		} // for
 	};
 
 	var cache = (function() {
@@ -93,8 +117,8 @@ var mpd = (function() {
 	}
 
 	// Highlights the current track in the playlist and displays current song info.
-	function mpd_currentsong_show() {
-		console.log("mpd_currentsong_show();");
+	function mpd_currentsong_update() {
+		console.log("mpd_currentsong_update();");
 		var data = cache.get('currentsong');
 		$('.track-current').removeClass('track-current');
 		$('#playlist-pos-' + data['pos']).addClass('track-current');
@@ -104,7 +128,7 @@ var mpd = (function() {
 		$('#mpd-current-trackdate-text').html(data['date']);
 	}
 
-	function mpd_playlistinfo_show() {
+	function mpd_playlistinfo_update() {
 		console.log("mpd_playlist_show();");
 		var data = cache.get('playlistinfo');
 
@@ -225,8 +249,8 @@ var mpd = (function() {
 		'play': noop,
 		'pause': noop,
 		// Info commands
-		'currentsong': mpd_currentsong_show,
-		'playlistinfo': mpd_playlistinfo_show,
+		'currentsong': mpd_currentsong_update,
+		'playlistinfo': mpd_playlistinfo_update,
 		'status': mpd_status_update,
 	};
 
