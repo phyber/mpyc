@@ -33,6 +33,7 @@ var mpd = (function() {
 	// HTML5 SSE source
 	var sse_source = new EventSource('/mpd/info_stream');
 	sse_source.onmessage = function(event) {
+		var json = jQuery.parseJSON(event.data);
 		switch (event.data) {
 			case MPD_IDLE_PLAYER:
 				// This event is useds so that the playlist follows the currently active track

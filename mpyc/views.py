@@ -49,9 +49,15 @@ def mpd_info_stream():
 		"""
 		# Outside of a request we have to get the context
 		with app.app_context():
-			for message in mpd.execute('idle'):
-				print("MPD Idle delivered: {}".format(message))
-				yield 'data: {}\n\n'.format(message)
+			while True:
+				message = mpd.idle()
+				print("MPD IDLE: {}".format(message))
+				yield 'data: {}\n\n'.format(
+						flask.json.dumps(
+							message,
+							separators=mpyc.utils.JSON_SEPARATORS
+							)
+						)
 
 	return flask.Response(event_stream(),
 			mimetype='text/event-stream')
