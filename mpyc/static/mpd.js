@@ -1,3 +1,4 @@
+"use strict";
 var mpd = (function() {
 	var SECS_DAY = 86400;
 	var SECS_HOUR = 3600;
