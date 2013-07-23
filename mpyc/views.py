@@ -6,6 +6,7 @@ from mpyc import mpd
 import mpyc.utils
 from flask.ext.mpd.exceptions import InvalidCommand
 
+
 @app.route("/", methods=['GET'])
 def root():
     """
@@ -13,12 +14,14 @@ def root():
     """
     return flask.redirect(flask.url_for('mpd_view'))
 
+
 @app.route("/mpd/", methods=['GET'])
 def mpd_view():
     """
     Renders the mpd.html template.
     """
     return flask.render_template("mpd.html")
+
 
 @app.route("/mpd/<mpd_command>.json", methods=['GET'])
 def mpd_command(mpd_command):
@@ -35,6 +38,7 @@ def mpd_command(mpd_command):
     except Exception as e:
         return "Fail: {}".format(e)
     return mpyc.utils.jsonify(data)
+
 
 @app.route("/mpd/info_stream")
 def mpd_info_stream():
@@ -53,11 +57,11 @@ def mpd_info_stream():
                 message = mpd.idle()
                 print("MPD IDLE: {}".format(message))
                 yield 'data: {}\n\n'.format(
-                        flask.json.dumps(
-                            message,
-                            separators=mpyc.utils.JSON_SEPARATORS
-                            )
-                        )
+                    flask.json.dumps(
+                        message,
+                        separators=mpyc.utils.JSON_SEPARATORS
+                    )
+                )
 
     return flask.Response(
         event_stream(),

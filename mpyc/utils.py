@@ -4,6 +4,7 @@ import flask
 
 JSON_SEPARATORS = (',', ':')
 
+
 def jsonify(arg):
     """
     Return a flask.Response with the JSONified arg and appropriate
