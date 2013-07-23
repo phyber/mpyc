@@ -65,6 +65,8 @@ var mpd = (function() {
 					mpd_currentsong_update();
 					mpd_status_update();
 					break;
+				case MPD_IDLE_PLAYLIST:
+					break;
 				default:
 					break;
 				} // switch
