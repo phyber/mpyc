@@ -36,7 +36,7 @@ def mpd_command(mpd_command):
         error = {'error': e.msg}
         return mpyc.utils.jsonify(error)
     except Exception as e:
-        return "Fail: {}".format(e)
+        return "Fail: {e}".format(e=e)
     return mpyc.utils.jsonify(data)
 
 
@@ -55,9 +55,8 @@ def mpd_info_stream():
         with app.app_context():
             while True:
                 message = mpd.idle()
-                print("MPD IDLE: {}".format(message))
-                yield 'data: {}\n\n'.format(
-                    flask.json.dumps(
+                yield 'data: {data}\n\n'.format(
+                    data=flask.json.dumps(
                         message,
                         separators=mpyc.utils.JSON_SEPARATORS
                     )
