@@ -5,8 +5,8 @@
 DEBUG = False
 
 # IP address and port that the app server should listen on.
-HOST = '0.0.0.0'
-PORT = None
+SERVER_HOST = '0.0.0.0'
+SERVER_PORT = None
 
 # MPD connection details.
 MPD_HOST = '127.0.0.1'
