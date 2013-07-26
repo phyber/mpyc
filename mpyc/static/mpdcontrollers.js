@@ -18,7 +18,7 @@ app.filter('duration', function() {
 	var DURATION_LONG_STR = ['d ', 'h ', 'm ', 's'];
 	var DURATION_SHORT_STR = [':', ':', ':', ''];
 	return function(secs, longFormat) {
-		if (!angular.isDefined(secs)) {
+		if (angular.isUndefined(secs)) {
 			return '';
 		}
 		var str = '';
@@ -49,7 +49,7 @@ app.filter('duration', function() {
 app.filter('paging', function() {
 	return function(input, startFrom) {
 		/* Sometimes input is undefined for some reason */
-		if (!angular.isDefined(input)) {
+		if (angular.isUndefined(input)) {
 			return;
 		}
 		startFrom = +startFrom;
