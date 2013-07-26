@@ -12,7 +12,7 @@ Requirements
  * [python-mpd](http://jatreuman.indefero.net/p/python-mpd/)
   * python-mpd in Debian.
  * [Flask-MPD](https://github.com/phyber/flask_mpd)
- * [jQuery](http://jquery.com) and the [jQuery-hURL](https://github.com/makesites/jquery-hurl/) plugins are also in use, they are included in the repository.
+ * [AngularJS](http://angularjs.org/)
 
 Configuration
 -------------
@@ -29,7 +29,4 @@ Todo
 ----
 
  * Track time should progress.
- * Current track should be updated as playlist progresses.
- * Double-clicking a track in the playlist should play that track.
  * Track position display at foot of page.
- * MPD client should be implemented as a Flask extension.
