@@ -133,6 +133,7 @@ function StatusCtrl($rootScope, $scope, $http) {
 		$scope.status = data;
 		$rootScope.$broadcast('status', data);
 		$scope.currentSongPage = Math.floor(data['song'] / PLAYLIST_PAGE_SIZE);
+		$scope.broadcastCurrentSongPage();
 	});
 	$http.get('/mpd/currentsong.json').success(function(data) {
 		$scope.currentsong = data;
