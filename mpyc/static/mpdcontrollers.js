@@ -85,6 +85,18 @@ app.service('cache', function() {
 	};
 });
 
+function ServerSideEventCtrl($rootScope, $scope) {
+	$scope.msg = {};
+	var sseCallback = function(msg) {
+		$scope.$apply(function() {
+			$scope.msg = JSON.parse(msg.data);
+		});
+		$rootScope.$broadcast('idle'+$scope.msg['idle'], $scope['info']);
+	}
+	var source = new EventSource('/mpd/info_stream');
+	source.addEventListener('message', sseCallback, false);
+}
+
 function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 	$scope.headers = [
 		"Time",
@@ -118,18 +130,21 @@ function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 		$scope.currentSongPage = currentsongpage;
 		$scope.currentPage = currentsongpage;
 	});
-	$http.get('/mpd/playlistinfo.json').success(function(data) {
-		var total_time_secs = 0;
-		for (var i = 0; i < data.length; i++) {
-			var current = data[i];
-			var track_time = current['time'];
-			total_time_secs += parseInt(track_time);
-			// Replaces the time in seconds with the human readable time as rendered by the duration filter.
-			current['time'] = $filter('duration')(track_time);
-		}
-		$scope.playlist_total_time_secs = total_time_secs;
-		$scope.playlistinfo = data;
-	});
+	var fetchPlaylist = function() {
+		$http.get('/mpd/playlistinfo.json').success(function(data) {
+			var total_time_secs = 0;
+			for (var i = 0; i < data.length; i++) {
+				var current = data[i];
+				var track_time = current['time'];
+				total_time_secs += parseInt(track_time);
+				// Replaces the time in seconds with the human readable time as rendered by the duration filter.
+				current['time'] = $filter('duration')(track_time);
+			}
+			$scope.playlist_total_time_secs = total_time_secs;
+			$scope.playlistinfo = data;
+		});
+	}
+	fetchPlaylist();
 }
 
 function StatusCtrl($rootScope, $scope, $http) {
@@ -148,14 +163,20 @@ function StatusCtrl($rootScope, $scope, $http) {
 			$scope.status['state'] = new_state;
 		});
 	}
-	$http.get('/mpd/status.json').success(function(data) {
-		$scope.status = data;
-		$rootScope.$broadcast('status', data);
-		$scope.currentSongPage = Math.floor(data['song'] / PLAYLIST_PAGE_SIZE);
-		$scope.broadcastCurrentSongPage();
+	var fetchStatus = function() {
+		$http.get('/mpd/status.json').success(function(data) {
+			$scope.status = data;
+			$rootScope.$broadcast('status', data);
+			$scope.currentSongPage = Math.floor(data['song'] / PLAYLIST_PAGE_SIZE);
+			$scope.broadcastCurrentSongPage();
+		});
+		$http.get('/mpd/currentsong.json').success(function(data) {
+			$scope.currentsong = data;
+			$rootScope.$broadcast('currentsong', data);
+		});
+	}
+	$rootScope.$on('idleplayer', function(event, args) {
+		fetchStatus();
 	});
-	$http.get('/mpd/currentsong.json').success(function(data) {
-		$scope.currentsong = data;
-		$rootScope.$broadcast('currentsong', data);
-	});
+	fetchStatus();
 }
