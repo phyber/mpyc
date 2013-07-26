@@ -39,8 +39,8 @@ app.filter('duration', function() {
 				}
 				// Show this number if > 0 and force it to show
 				// if it's a minutes or a seconds number.
-				var show = (num != 0 || i > 1)
-					str += show ? num + DURATION_SHORT_STR[i] : '';
+				var show = (num != 0 || i > 1);
+				str += show ? num + DURATION_SHORT_STR[i] : '';
 			}
 		}
 		return str;
