@@ -10,6 +10,7 @@ var SECS_SEC = 1;
 var DURATION_SECS = [SECS_DAY, SECS_HOUR, SECS_MIN, SECS_SEC];
 var DURATION_LONG_STR = ['d ', 'h ', 'm ', 's'];
 var DURATION_SHORT_STR = [':', ':', ':', ''];
+var PLAYLIST_PAGE_SIZE = 50;
 
 angular.module('mpdFilters', []).
 	filter('duration', function() {
@@ -99,12 +100,17 @@ function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 		"album",
 	];
 	$scope.currentPage = 0;
-	$scope.pageSize = 50;
+	$scope.pageSize = PLAYLIST_PAGE_SIZE;
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
 	}
 	$rootScope.$on('currentsong', function(event, currentsong) {
 		$scope.currentSongPos = currentsong['pos'];
+	});
+	$rootScope.$on('currentsongpage', function(event, currentsongpage) {
+		$scope.currentSongPage = currentsongpage;
+		$scope.currentPage = currentsongpage;
+		console.log("Got currentsongpage");
 	});
 	$http.get('/mpd/playlistinfo.json').success(function(data) {
 		var total_time_secs = 0;
@@ -120,9 +126,13 @@ function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 }
 
 function StatusCtrl($rootScope, $scope, $http) {
+	$scope.broadcastCurrentSongPage = function() {
+		$rootScope.$broadcast('currentsongpage', $scope.currentSongPage);
+	}
 	$http.get('/mpd/status.json').success(function(data) {
 		$scope.status = data;
 		$rootScope.$broadcast('status', data);
+		$scope.currentSongPage = Math.floor(data['song'] / PLAYLIST_PAGE_SIZE);
 	});
 	$http.get('/mpd/currentsong.json').success(function(data) {
 		$scope.currentsong = data;
