@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="mpdFilters">
 <head>
 	<meta charset="UTF-8"/>
 	<title>MPyC</title>
@@ -10,26 +10,26 @@
 </head>
 <body>
 	<div id="mpd-container">
-		<div id="mpd-status-container" class="mpd-status">
+		<div id="mpd-status-container" class="mpd-status" ng-controller="StatusCtrl">
 			<div id="mpd-status-left">
-				<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">??:??</span>/<span id="mpd-current-total-tracktime-text">??:??</span></span>
-				<span id="mpd-current-status-text">N/A</span>
+				<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">{{ '{{status.time.split(":")[0] | duration}}' }}</span>/<span id="mpd-current-total-tracktime-text">{{ '{{status.time.split(":")[1] | duration}}' }}</span></span>
+				<span id="mpd-current-status-text">{{ '[{{status.state | state}}]' }}</span>
 			</div>
 			<div id="mpd-status-center">
-				--| <span id="mpd-current-album-text" class="track-album-color">N/A</span> |--
+				--| <span id="mpd-current-album-text" class="track-album-color">{{ '{{currentsong.album}}' }}</span> |--
 				<span id="mpd-current-track">
-					<span id="mpd-current-artist-text" class="track-artist-color">N/A</span> - <span id="mpd-current-track-text" class="track-title-color">N/A</span> (<span id="mpd-current-trackdate-text">N/A</span>)
+					<span id="mpd-current-artist-text" class="track-artist-color">{{ '{{currentsong.artist}}' }}</span> - <span id="mpd-current-track-text" class="track-title-color">{{ '{{currentsong.title}}' }}</span> (<span id="mpd-current-trackdate-text">{{ '{{currentsong.date }}' }}</span>)
 				</span>
 			</div>
 			<div id="mpd-status-right">
-				<span id="mpd-volume-text"></span>
+				<span id="mpd-volume-text">{{ '{{status.volume | volume}}' }}</span>
 				<span id="mpd-flags-text"></span>
 			</div>
 		</div> <!-- mpd-status-container -->
 		<br class="clearfloat"/>
 		<hr/>
-		<div id="mpd-playlist-stats">
-			Playlist: (<span id="mpd-playlist-items-text"></span> items, length: <span id="mpd-playlist-length-text"></span>)
+		<div id="mpd-playlist-stats" ng-controller="PlaylistStatsCtrl">
+			Playlist: (<span id="mpd-playlist-items-text">{{ '{{playliststats.items}}' }}</span> items, length: <span id="mpd-playlist-length-text">{{ '{{playliststats.length | duration:true}}' }}</span>)
 		</div> <!-- mpd-playlist-stats -->
 		<hr class="clearfloat"/>
 		<div id="mpd-playlist">
