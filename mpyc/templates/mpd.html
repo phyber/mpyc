@@ -13,7 +13,7 @@
 		<div id="mpd-status-container" class="mpd-status" ng-controller="StatusCtrl">
 			<div id="mpd-status-left">
 				<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">{{ '{{status.time.split(":")[0] | duration}}' }}</span>/<span id="mpd-current-total-tracktime-text">{{ '{{status.time.split(":")[1] | duration}}' }}</span></span>
-				<span id="mpd-current-status-text">{{ '[{{status.state | state}}]' }}</span>
+				<span id="mpd-current-status-text" ng-click="toggleState()">{{ '[{{status.state | state}}]' }}</span>
 			</div>
 			<div id="mpd-status-center">
 				--| <span id="mpd-current-album-text" class="track-album-color">{{ '{{currentsong.album}}' }}</span> |--

@@ -125,8 +125,20 @@ function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 }
 
 function StatusCtrl($rootScope, $scope, $http) {
+	var STATE_TRANSITION = {
+		"pause": "play",
+		"stop": "play",
+		"play": "pause"
+	};
 	$scope.broadcastCurrentSongPage = function() {
 		$rootScope.$broadcast('currentsongpage', $scope.currentSongPage);
+	}
+	$scope.toggleState = function() {
+		var current_state = $scope.status['state'];
+		var new_state = STATE_TRANSITION[current_state];
+		$http.get('/mpd/'+new_state+'.json').success(function() {
+			$scope.status['state'] = new_state;
+		});
 	}
 	$http.get('/mpd/status.json').success(function(data) {
 		$scope.status = data;
