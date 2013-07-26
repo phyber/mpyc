@@ -139,9 +139,9 @@ td.track-artist {
 
 #prev-page {
 	float: left;
-	visibility: hidden;
+	/*visibility: hidden;*/
 }
 #next-page {
 	float: right;
-	visibility: hidden;
+	/*visibility: hidden;*/
 }

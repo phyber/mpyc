@@ -42,6 +42,16 @@ angular.module('mpdFilters', []).
 			return str;
 		}
 	}).
+	filter('paging', function() {
+		return function(input, startFrom) {
+			/* Sometimes input is undefined for some reason */
+			if (input == undefined) {
+				return;
+			}
+			startFrom = +startFrom;
+			return input.slice(startFrom);
+		}
+	}).
 	filter('state', function() {
 		var MPD_STATES = {
 			'pause': 'paused',
@@ -61,6 +71,17 @@ angular.module('mpdFilters', []).
 				return volume;
 			}
 		}
+	}).
+	service('cache', function() {
+		var values = {};
+		return {
+			get: function(key) {
+				return values[key];
+			},
+			set: function(key, value) {
+				values[key] = value;
+			},
+		};
 	})
 ;
 
@@ -73,20 +94,44 @@ function PlaylistCtrl($scope) {
 	];
 }
 
-function PlaylistStatsCtrl($scope, $http) {
-	$scope.playliststats = {
-		'items': 355,
-		'length': 1324,
-	};
+function PlaylistInfoCtrl($scope, $http, $filter, cache) {
+	$scope.headers = [
+		"Time",
+		"Artist",
+		"Title",
+		"Album"
+	];
+	$scope.track_info = [
+		"time",
+		"artist",
+		"title",
+		"album",
+	];
+	$scope.currentPage = 0;
+	$scope.pageSize = 50;
+	$scope.numberOfPages = function() {
+		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
+	}
+	$http.get('/mpd/playlistinfo.json').success(function(data) {
+		var total_time_secs = 0;
+		for (var i = 0; i < data.length; i++) {
+			var current = data[i];
+			var track_time = current['time'];
+			total_time_secs += parseInt(track_time);
+			current['time'] = $filter('duration')(track_time);
+		}
+		$scope.playlist_total_time_secs = total_time_secs;
+		$scope.playlistinfo = data;
+	});
 }
 
-function StatusCtrl($scope, $http) {
+function StatusCtrl($scope, $http, cache) {
 	$http.get('/mpd/status.json').success(function(data) {
 		$scope.status = data;
-		console.log(data);
+		cache.set('status', data);
 	});
 	$http.get('/mpd/currentsong.json').success(function(data) {
 		$scope.currentsong = data;
-		console.log(data);
+		cache.set('currentsong', data);
 	});
 }

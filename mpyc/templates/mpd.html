@@ -28,22 +28,29 @@
 		</div> <!-- mpd-status-container -->
 		<br class="clearfloat"/>
 		<hr/>
-		<div id="mpd-playlist-stats" ng-controller="PlaylistStatsCtrl">
-			Playlist: (<span id="mpd-playlist-items-text">{{ '{{playliststats.items}}' }}</span> items, length: <span id="mpd-playlist-length-text">{{ '{{playliststats.length | duration:true}}' }}</span>)
-		</div> <!-- mpd-playlist-stats -->
-		<hr class="clearfloat"/>
-		<div id="mpd-playlist">
-			<table id="mpd-playlist-table" ng-controller="PlaylistCtrl">
-				 <thead id="mpd-playlist-table-head">
-					<tr>
-						<th class="table-header" ng-repeat="header in headers">{{ '{{header}}' }}</th>
-					</tr>
-				</thead>
-			</table>
-		</div> <!-- mpd-playlist -->
-		<div id="mpd-footer">
-			<span id="prev-page">&lt;-- Previous</span><span id="next-page">Next --&gt;</span>
-		</div> <!-- mpd-footer -->
+		<div ng-controller="PlaylistInfoCtrl">
+			<div id="mpd-playlist-stats" ng-controller="PlaylistInfoCtrl">
+				Playlist: (<span id="mpd-playlist-items-text">{{ '{{playlistinfo.length}}' }}</span> items, length: <span id="mpd-playlist-length-text">{{ '{{playlist_total_time_secs | duration:true}}' }}</span>)
+			</div> <!-- mpd-playlist-stats -->
+			<hr class="clearfloat"/>
+			<div id="mpd-playlist">
+				<table id="mpd-playlist-table">
+					 <thead id="mpd-playlist-table-head">
+						<tr>
+							<th class="table-header" ng-repeat="header in headers">{{ '{{header}}' }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="playlist-pos-{{ '{{track.pos}}' }}" class="playlist-pos" ng-repeat="track in playlistinfo | paging:currentPage*pageSize | limitTo:pageSize">
+							<td class="track-{{ '{{ti}}' }} track-{{ '{{ti}}' }}-color" title="{{ '{{track[ti]}}' }}" ng-repeat="ti in track_info">{{ '{{track[ti]}}' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> <!-- mpd-playlist -->
+			<div id="mpd-footer">
+				<span id="prev-page" ng-hide="currentPage == 0" ng-click="currentPage = currentPage - 1">&lt;-- Previous</span><span id="next-page" ng-hide="currentPage >= playlistinfo.length/pageSize - 1" ng-click="currentPage = currentPage + 1">Next --&gt;</span>
+			</div> <!-- mpd-footer -->
+		</div> <!-- PlaylistInfoCtrl -->
 	</div> <!-- mpd-container -->
 </body>
 </html>
