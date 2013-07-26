@@ -92,7 +92,7 @@ function ServerSideEventCtrl($rootScope, $scope, constant) {
 	$scope.msg = {};
 	var sseCallback = function(msg) {
 		$scope.$apply(function() {
-			$scope.msg = JSON.parse(msg.data);
+			$scope.msg = angular.fromJson(msg.data);
 		});
 		$rootScope.$broadcast('idle'+$scope.msg['idle'], $scope['info']);
 	}
