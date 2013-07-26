@@ -85,16 +85,7 @@ angular.module('mpdFilters', []).
 	})
 ;
 
-function PlaylistCtrl($scope) {
-	$scope.headers = [
-		"Time",
-		"Artist",
-		"Title",
-		"Album"
-	];
-}
-
-function PlaylistInfoCtrl($scope, $http, $filter, cache) {
+function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 	$scope.headers = [
 		"Time",
 		"Artist",
@@ -112,6 +103,9 @@ function PlaylistInfoCtrl($scope, $http, $filter, cache) {
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
 	}
+	$rootScope.$on('currentsong', function(event, currentsong) {
+		$scope.currentSongPos = currentsong['pos'];
+	});
 	$http.get('/mpd/playlistinfo.json').success(function(data) {
 		var total_time_secs = 0;
 		for (var i = 0; i < data.length; i++) {
@@ -125,13 +119,13 @@ function PlaylistInfoCtrl($scope, $http, $filter, cache) {
 	});
 }
 
-function StatusCtrl($scope, $http, cache) {
+function StatusCtrl($rootScope, $scope, $http) {
 	$http.get('/mpd/status.json').success(function(data) {
 		$scope.status = data;
-		cache.set('status', data);
+		$rootScope.$broadcast('status', data);
 	});
 	$http.get('/mpd/currentsong.json').success(function(data) {
 		$scope.currentsong = data;
-		cache.set('currentsong', data);
+		$rootScope.$broadcast('currentsong', data);
 	});
 }
