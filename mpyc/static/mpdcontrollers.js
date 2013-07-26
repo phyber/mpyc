@@ -103,6 +103,14 @@ function PlaylistInfoCtrl($rootScope, $scope, $http, $filter) {
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
 	}
+	$scope.trackDblClick = function(pos) {
+		var httpConfig = {
+			'params': {'songid': pos},
+		};
+		$http.get('/mpd/play.json', httpConfig).success(function() {
+			$scope.currentSongPos = pos;
+		});
+	}
 	$rootScope.$on('currentsong', function(event, currentsong) {
 		$scope.currentSongPos = currentsong['pos'];
 	});

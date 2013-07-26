@@ -41,7 +41,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr id="playlist-pos-{{ '{{track.pos}}' }}" class="playlist-pos" ng-class="{'track-current': track.pos==currentSongPos}" ng-repeat="track in playlistinfo | paging:currentPage*pageSize | limitTo:pageSize">
+						<tr id="playlist-pos-{{ '{{track.pos}}' }}" class="playlist-pos" ng-class="{'track-current': track.pos==currentSongPos}" ng-dblclick="trackDblClick(track.pos)" ng-repeat="track in playlistinfo | paging:currentPage*pageSize | limitTo:pageSize">
 							<td class="track-{{ '{{ti}}' }} track-{{ '{{ti}}' }}-color" title="{{ '{{track[ti]}}' }}" ng-repeat="ti in track_info">{{ '{{track[ti]}}' }}</td>
 						</tr>
 					</tbody>

@@ -31,7 +31,14 @@ def mpd_command(mpd_command):
     and returned.
     """
     try:
-        data = mpd.execute(mpd_command)
+        arg = None
+        if mpd_command == "play":
+            try:
+                arg = int(flask.request.args.get('songid'))
+            except:
+                pass
+
+        data = mpd.execute(mpd_command, arg)
     except InvalidCommand as e:
         error = {'error': e.msg}
         return mpyc.utils.jsonify(error)
