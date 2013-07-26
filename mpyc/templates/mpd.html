@@ -1,59 +1,49 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8"/>
-		<link rel="shortcut icon" href="#"/>
-		<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='style.css') }}" title='Standard layout'/>
-		<script src="{{ url_for('static', filename='jquery-2.0.2.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='jquery.hurl.js') }}"></script>
-		<script src="{{ url_for('static', filename='mpd.js') }}"></script>
-		<title>MPyC</title>
-	</head>
-	<body>
-		<div id="mpd-container">
-			<div id="mpd-status-container" class="mpd-status">
-				<div id="mpd-status-left">
-					<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">??:??</span>/<span id="mpd-current-total-tracktime-text">??:??</span></span>
-					<span id="mpd-current-status-text">N/A</span>
-				</div>
-				<div id="mpd-status-center">
-					--| <span id="mpd-current-album-text" class="track-album-color">N/A</span> |--
-					<span id="mpd-current-track">
-						<span id="mpd-current-artist-text" class="track-artist-color">N/A</span> - <span id="mpd-current-track-text" class="track-title-color">N/A</span> (<span id="mpd-current-trackdate-text">N/A</span>)
-					</span>
-				</div>
-				<div id="mpd-status-right">
-					<span id="mpd-volume-text"></span>
-					<span id="mpd-flags-text"></span>
-				</div>
-			</div> <!-- mpd-status-container -->
-			<br class="clearfloat"/>
-			<hr/>
-			<div id="mpd-playlist-stats">
-				Playlist: (<span id="mpd-playlist-items-text"></span> items, length: <span id="mpd-playlist-length-text"></span>)
-				<!--
-				<audio controls>
-					<source src="http://192.168.1.1:8000/" type="audio/ogg"/>
-					Your browser does not support the audio element.
-				</audio>
-				-->
-			</div> <!-- mpd-playlist-stats -->
-			<hr class="clearfloat"/>
-			<div id="mpd-playlist">
-				<table id="mpd-playlist-table">
-					 <thead id="mpd-playlist-table-head">
-						<tr>
-							<th class="table-header">Time</th>
-							<th class="table-header">Artist</th>
-							<th class="table-header">Title</th>
-							<th class="table-header">Album</th>
-						</tr>
-					</thead>
-				</table>
-			</div> <!-- mpd-playlist -->
-			<div id="mpd-footer">
-				<span id="prev-page">&lt;-- Previous</span><span id="next-page">Next --&gt;</span>
-			</div> <!-- mpd-footer -->
-		</div> <!-- mpd-container -->
-	</body>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8"/>
+	<title>MPyC</title>
+	<link rel="shortcut icon" href="#"/>
+	<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='style.css') }}" title='Standard layout'/>
+	<script src="{{ url_for('static', filename='angular.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='mpdcontrollers.js') }}"></script>
+</head>
+<body>
+	<div id="mpd-container">
+		<div id="mpd-status-container" class="mpd-status">
+			<div id="mpd-status-left">
+				<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">??:??</span>/<span id="mpd-current-total-tracktime-text">??:??</span></span>
+				<span id="mpd-current-status-text">N/A</span>
+			</div>
+			<div id="mpd-status-center">
+				--| <span id="mpd-current-album-text" class="track-album-color">N/A</span> |--
+				<span id="mpd-current-track">
+					<span id="mpd-current-artist-text" class="track-artist-color">N/A</span> - <span id="mpd-current-track-text" class="track-title-color">N/A</span> (<span id="mpd-current-trackdate-text">N/A</span>)
+				</span>
+			</div>
+			<div id="mpd-status-right">
+				<span id="mpd-volume-text"></span>
+				<span id="mpd-flags-text"></span>
+			</div>
+		</div> <!-- mpd-status-container -->
+		<br class="clearfloat"/>
+		<hr/>
+		<div id="mpd-playlist-stats">
+			Playlist: (<span id="mpd-playlist-items-text"></span> items, length: <span id="mpd-playlist-length-text"></span>)
+		</div> <!-- mpd-playlist-stats -->
+		<hr class="clearfloat"/>
+		<div id="mpd-playlist">
+			<table id="mpd-playlist-table" ng-controller="PlaylistCtrl">
+				 <thead id="mpd-playlist-table-head">
+					<tr>
+						<th class="table-header" ng-repeat="header in headers">{{ '{{header}}' }}</th>
+					</tr>
+				</thead>
+			</table>
+		</div> <!-- mpd-playlist -->
+		<div id="mpd-footer">
+			<span id="prev-page">&lt;-- Previous</span><span id="next-page">Next --&gt;</span>
+		</div> <!-- mpd-footer -->
+	</div> <!-- mpd-container -->
+</body>
 </html>
