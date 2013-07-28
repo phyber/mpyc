@@ -45,7 +45,7 @@
 			if (angular.isUndefined(input)) {
 				return;
 			}
-			startFrom = +startFrom;
+			startFrom = parseInt(startFrom);
 			return input.slice(startFrom);
 		}
 	});

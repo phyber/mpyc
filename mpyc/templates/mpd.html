@@ -5,11 +5,7 @@
 	<title>MPyC</title>
 	<link rel="shortcut icon" href="#"/>
 	<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='css/style.css') }}" title='Standard layout'/>
-	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mpd.app.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mpd.controllers.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mpd.filters.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mpd.services.js') }}"></script>
+	<!-- JavaScript loaded at end of body. -->
 </head>
 <body>
 	<div id="mpd-container">
@@ -55,5 +51,11 @@
 			</div> <!-- mpd-footer -->
 		</div> <!-- PlaylistInfoCtrl -->
 	</div> <!-- mpd-container -->
+	<!-- Late load javascript. -->
+	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.app.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.controllers.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.filters.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.services.js') }}"></script>
 </body>
 </html>
