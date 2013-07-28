@@ -11,7 +11,9 @@
 	<div id="mpd-container">
 		<div id="mpd-status-container" class="mpd-status" ng-controller="StatusCtrl">
 			<div id="mpd-status-left">
-				<span id="mpd-current-tracktime"><span id="mpd-current-tracktime-text">{{ '{{status.time.split(":")[0] | duration}}' }}</span>/<span id="mpd-current-total-tracktime-text">{{ '{{status.time.split(":")[1] | duration}}' }}</span></span>
+				<span id="mpd-current-tracktime">
+					<span id="mpd-current-tracktime-text">{{ '{{status.time.split(":")[0] | duration}}' }}</span>/<span id="mpd-current-total-tracktime-text">{{ '{{status.time.split(":")[1] | duration}}' }}</span>
+				</span>
 				<span id="mpd-current-status-text" ng-click="toggleState()">{{ '[{{status.state | state}}]' }}</span>
 			</div>
 			<div id="mpd-status-center">
@@ -24,7 +26,7 @@
 				<span id="mpd-volume-text">{{ '{{status.volume | volume}}' }}</span>
 				<span id="mpd-flags-text"></span>
 			</div>
-		</div> <!-- mpd-status-container -->
+		</div> <!-- mpd-status-container --><!-- StatusCtrl -->
 		<br class="clearfloat"/>
 		<hr/>
 		<div ng-controller="PlaylistInfoCtrl">
@@ -47,7 +49,8 @@
 				</table>
 			</div> <!-- mpd-playlist -->
 			<div id="mpd-footer">
-				<span id="prev-page" ng-hide="currentPage == 0" ng-click="currentPage = currentPage - 1">&lt;-- Previous</span><span id="next-page" ng-hide="currentPage >= playlistinfo.length/pageSize - 1" ng-click="currentPage = currentPage + 1">Next --&gt;</span>
+				<span id="prev-page" ng-hide="currentPage <= 0" ng-click="currentPage = currentPage - 1">&lt;-- Previous</span>
+				<span id="next-page" ng-hide="currentPage >= playlistinfo.length/pageSize - 1" ng-click="currentPage = currentPage + 1">Next --&gt;</span>
 			</div> <!-- mpd-footer -->
 		</div> <!-- PlaylistInfoCtrl -->
 	</div> <!-- mpd-container -->
