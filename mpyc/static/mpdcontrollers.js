@@ -1,6 +1,9 @@
 "use strict";
 
 var app = angular.module('mpd', []);
+app.config(function($httpProvider) {
+	$httpProvider.defaults.cache = false;
+});
 app.constant('constant', {
 	PLAYLIST_PAGE_SIZE: 50,
 	CURRENTSONG_URI: '/mpd/currentsong.json',
