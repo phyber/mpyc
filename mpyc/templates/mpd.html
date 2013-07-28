@@ -6,7 +6,10 @@
 	<link rel="shortcut icon" href="#"/>
 	<link rel="stylesheet" id='stylesheet' href="{{ url_for('static', filename='css/style.css') }}" title='Standard layout'/>
 	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/mpdcontrollers.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.app.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.controllers.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.filters.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/mpd.services.js') }}"></script>
 </head>
 <body>
 	<div id="mpd-container">
@@ -18,7 +21,7 @@
 			<div id="mpd-status-center">
 				--| <span id="mpd-current-album-text" class="track-album-color">{{ '{{currentsong.album}}' }}</span> |--
 				<span id="mpd-current-track" ng-click="broadcastCurrentSongPage()">
-					<span id="mpd-current-artist-text" class="track-artist-color">{{ '{{currentsong.artist}}' }}</span> - <span id="mpd-current-track-text" class="track-title-color">{{ '{{currentsong.title}}' }}</span> (<span id="mpd-current-trackdate-text">{{ '{{currentsong.date }}' }}</span>)
+					<span id="mpd-current-artist-text" class="track-artist-color">{{ '{{currentsong.artist}}' }}</span> - <span id="mpd-current-track-text" class="track-title-color">{{ '{{currentsong.title}}' }}</span> (<span id="mpd-current-trackdate-text">{{ '{{currentsong.date}}' }}</span>)
 				</span>
 			</div>
 			<div id="mpd-status-right">
