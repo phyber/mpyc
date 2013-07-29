@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Running with debugging on will automatically reload Flask when files are
 # changed.
 DEBUG = False

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import flask
 
 JSON_SEPARATORS = (',', ':')

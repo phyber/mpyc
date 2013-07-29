@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import os
 import flask
 from flask.ext.mpd import MPD

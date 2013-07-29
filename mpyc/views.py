@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import flask
 from mpyc import app
 from mpyc import mpd
