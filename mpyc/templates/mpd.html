@@ -55,12 +55,16 @@
 				</table> <!-- mpd-playlist-table -->
 			</div> <!-- mpd-playlist -->
 			<div id="mpd-footer">
-				<span id="prev-page" ng-hide="currentPage <= 0" ng-click="currentPage = currentPage - 1">&lt;-- Previous</span>
-				<span id="next-page" ng-hide="currentPage >= playlistinfo.length/pageSize - 1" ng-click="currentPage = currentPage + 1">Next --&gt;</span>
+				<span id="prev-page"
+					ng-hide="currentPage <= 0"
+					ng-click="currentPage = currentPage - 1">&lt;-- Previous</span>
+				<span id="next-page"
+					ng-hide="currentPage >= playlistinfo.length/pageSize - 1"
+					ng-click="currentPage = currentPage + 1">Next --&gt;</span>
 			</div> <!-- mpd-footer -->
 		</div> <!-- mpd-playlist-container --> <!-- PlaylistInfoCtrl -->
 	</div> <!-- mpd-container -->
-	<!-- Late load javascript. -->
+	<!-- Late load JavaScript. -->
 	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/mpd.app.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/mpd.controllers.js') }}"></script>
