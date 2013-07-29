@@ -10,5 +10,5 @@ SERVER_PORT = None
 
 # MPD connection details.
 MPD_HOST = '127.0.0.1'
-MPD_PORT = 6000
+MPD_PORT = 6600
 MPD_PASS = None
