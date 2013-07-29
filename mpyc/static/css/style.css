@@ -55,6 +55,9 @@ td.track-artist {
 .track-title-color {
 	color: yellow;
 }
+.track-date-color {
+	color: olive;
+}
 .track-current {
 	font-style: italic;
 	font-weight: bold;
