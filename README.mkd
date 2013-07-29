@@ -7,10 +7,10 @@ Requirements
 ------------
 
  * [Python](http://python.org/) 2.7 (might work with other versions, but was developed with this)
- * [Flask](http://flask.pocoo.org/)
- * [python-mpd2](https://github.com/Mic92/python-mpd2)
- * [Flask-MPD](https://github.com/phyber/flask_mpd)
- * [AngularJS](http://angularjs.org/)
+ * [Flask](http://flask.pocoo.org/) >= 0.9
+ * [python-mpd2](https://github.com/Mic92/python-mpd2) >= v0.5.0
+ * [Flask-MPD](https://github.com/phyber/flask_mpd) >= 0.1
+ * [AngularJS](http://angularjs.org/) >= 1.0.7
 
 Installation
 ------------
