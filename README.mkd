@@ -30,7 +30,9 @@ as `runserver.py`) as `local.cfg`. Change settings as needed.
 Running
 -------
 
-After configuration just execute `bin/python2.7 mpyc/runserver.py` in the top-level directory of your virtualenv.
+After configuration just execute `bin/python2.7 mpyc/runserver.py` in the
+top-level directory of your virtualenv, and then connect to it with your
+browser on the port that you configured (5000 by default).
 
 Todo
 ----
