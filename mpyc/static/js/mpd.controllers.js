@@ -1,13 +1,14 @@
 "use strict";
 
 angular.module('mpd.controllers', [])
-.controller('ServerSideEventCtrl', function($rootScope, $scope, constant) {
+.controller('ServerSideEventCtrl', function($scope, constant) {
 	$scope.msg = {};
 	var sseCallback = function(msg) {
 		$scope.$apply(function() {
 			$scope.msg = angular.fromJson(msg.data);
 		});
-		$rootScope.$broadcast('idle'+$scope.msg['idle'], $scope['info']);
+		console.log("Received MPD idle: " + $scope.msg['idle']);
+		$scope.$broadcast('idle' + $scope.msg['idle'], $scope['info']);
 	}
 	var source = new EventSource(constant.INFO_STREAM_URI);
 	source.addEventListener('message', sseCallback, false);
@@ -89,7 +90,7 @@ angular.module('mpd.controllers', [])
 			$rootScope.$broadcast('currentsong', data);
 		});
 	}
-	$rootScope.$on('idleplayer', function(event, args) {
+	$scope.$on('idleplayer', function(event, args) {
 		fetchStatus();
 	});
 	fetchStatus();
