@@ -7,7 +7,7 @@ angular.module('mpd.controllers', [])
 		$scope.$apply(function() {
 			$scope.msg = angular.fromJson(msg.data);
 		});
-		console.log("Received MPD idle: " + $scope.msg['idle']);
+		console.log("Received MPD idle: " + msg.data);
 		$scope.$broadcast('idle' + $scope.msg['idle'], $scope['info']);
 	}
 	var source = new EventSource(constant.INFO_STREAM_URI);

@@ -61,7 +61,9 @@ def mpd_info_stream():
         # Outside of a request we have to get the context
         with app.app_context():
             while True:
-                message = mpd.idle()
+                message = mpd.idle(strip_dict_keys={
+                    'currentsong': ['file'],
+                })
                 yield 'data: {data}\n\n'.format(
                     data=flask.json.dumps(
                         message,
