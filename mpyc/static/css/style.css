@@ -67,84 +67,72 @@ td.track-artist {
 	clear: both;
 }
 
-#mpd-container {
-	/*margin: auto;*/
-}
-
-#mpd-current-status-text {
+#current-status-text {
 	display: block;
 }
 
-#mpd-current-time-text {
+#current-time-text {
 	display: block;
 }
 
-#mpd-current-track {
+#current-track {
 	display: block;
 }
 
-#mpd-volume-text {
+#volume-text {
 	display: block;
 }
 
-#mpd-flags-text {
+#flags-text {
 	display: block;
 }
 
-#mpd-footer {
-}
-
-#mpd-playlist-stats {
+#playlist-stats {
 	text-align: center;
 }
 
-#mpd-status-container {
-}
-
-#mpd-status-left {
+#status-left {
 	float: left;
 	text-align: left;
 	width: 25%;
 }
 
-#mpd-status-center {
+#status-center {
 	float: left;
 	text-align: center;
 	width: 50%;
 }
 
-#mpd-status-right {
+#status-right {
 	float: left;
 	text-align: right;
 	width: 25%;
 }
 
-#mpd-playlist-table {
+#playlist-table {
 	border-collapse: collapse;
 	border-color: red;
 	margin: 0px;
 	padding: 0px;
 }
 
-#mpd-playlist-table th, td {
+#playlist-table th, td {
 	text-align: left;
 	padding: 0px;
 	padding-right: 4px;
 }
 
-.mpd-playlist-page-hidden {
+.playlist-page-hidden {
 	display: none;
 }
 
-.mpd-playlist-page-visible {
+.playlist-page-visible {
 	display: table-row-group;
 }
 
 #prev-page {
 	float: left;
-	/*visibility: hidden;*/
 }
 #next-page {
 	float: right;
-	/*visibility: hidden;*/
 }

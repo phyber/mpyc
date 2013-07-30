@@ -8,42 +8,42 @@
 	<!-- JavaScript loaded at end of body. -->
 </head>
 <body>
-	<div id="mpd-container">
-		<div id="mpd-status-container" class="mpd-status" data-ng-controller="StatusCtrl">
-			<div id="mpd-status-left">
-				<span id="mpd-current-tracktime">
-					<span id="mpd-current-tracktime-text"
+	<div id="container">
+		<div id="status-container" class="status" data-ng-controller="StatusCtrl">
+			<div id="status-left">
+				<span id="current-tracktime">
+					<span id="current-tracktime-text"
 						data-ng-bind="status.time.split(':')[0] | duration">
-					</span>/<span id="mpd-current-total-tracktime-text"
+					</span>/<span id="current-total-tracktime-text"
 						data-ng-bind="status.time.split(':')[1] | duration">
 					</span>
 				</span>
-				<span id="mpd-current-status-text"
+				<span id="current-status-text"
 					data-ng-click="toggleState()"
 					data-ng-bind="status.state | state:true">
 				</span>
-			</div>
-			<div id="mpd-status-center">
-				--| <span id="mpd-current-album-text" class="track-album-color" data-ng-bind="currentsong.album"></span> |--
-				<span id="mpd-current-track" data-ng-click="broadcastCurrentSongPage()">
-					<span id="mpd-current-artist-text" class="track-artist-color" data-ng-bind="currentsong.artist"></span> - <span id="mpd-current-track-text" class="track-title-color" data-ng-bind="currentsong.title"></span> (<span id="mpd-current-trackdate-text" class="track-date-color" data-ng-bind="currentsong.date"></span>)
+			</div> <!-- status-left -->
+			<div id="status-center">
+				--| <span id="current-album-text" class="track-album-color" data-ng-bind="currentsong.album"></span> |--
+				<span id="current-track" data-ng-click="broadcastCurrentSongPage()">
+					<span id="current-artist-text" class="track-artist-color" data-ng-bind="currentsong.artist"></span> - <span id="current-track-text" class="track-title-color" data-ng-bind="currentsong.title"></span> (<span id="current-trackdate-text" class="track-date-color" data-ng-bind="currentsong.date"></span>)
 				</span>
-			</div>
-			<div id="mpd-status-right">
-				<span id="mpd-volume-text" title="Volume" data-ng-bind="status.volume | volume"></span>
-				<span id="mpd-flags-text" title="Flags"></span>
-			</div>
-		</div> <!-- mpd-status-container --><!-- StatusCtrl -->
+			</div> <!-- status-center -->
+			<div id="status-right">
+				<span id="volume-text" title="Volume" data-ng-bind="status.volume | volume"></span>
+				<span id="flags-text" title="Flags"></span>
+			</div> <!-- status-right -->
+		</div> <!-- status-container --><!-- StatusCtrl -->
 		<br class="clearfloat"/>
 		<hr/>
-		<div id="mpd-playlist-container" data-ng-controller="PlaylistInfoCtrl">
-			<div id="mpd-playlist-stats">
-				Playlist: (<span id="mpd-playlist-items-text" data-ng-bind="playlistinfo.length"></span> items, length: <span id="mpd-playlist-length-text" data-ng-bind="playlist_total_time_secs | duration:true"></span>)
-			</div> <!-- mpd-playlist-stats -->
+		<div id="playlist-container" data-ng-controller="PlaylistInfoCtrl">
+			<div id="playlist-stats">
+				Playlist: (<span id="playlist-items-text" data-ng-bind="playlistinfo.length"></span> items, length: <span id="playlist-length-text" data-ng-bind="playlist_total_time_secs | duration:true"></span>)
+			</div> <!-- playlist-stats -->
 			<hr class="clearfloat"/>
-			<div id="mpd-playlist">
-				<table id="mpd-playlist-table">
-					 <thead id="mpd-playlist-table-head">
+			<div id="playlist">
+				<table id="playlist-table">
+					 <thead id="playlist-table-head">
 						<tr>
 							<th class="table-header"
 								data-ng-repeat="header in headers"
@@ -64,18 +64,18 @@
 							</td>
 						</tr>
 					</tbody>
-				</table> <!-- mpd-playlist-table -->
-			</div> <!-- mpd-playlist -->
-			<div id="mpd-footer">
+				</table> <!-- playlist-table -->
+			</div> <!-- playlist -->
+			<div id="footer">
 				<span id="prev-page"
 					data-ng-hide="currentPage <= 0"
 					data-ng-click="currentPage = currentPage - 1">&lt;-- Previous</span>
 				<span id="next-page"
 					data-ng-hide="currentPage >= playlistinfo.length/pageSize - 1"
 					data-ng-click="currentPage = currentPage + 1">Next --&gt;</span>
-			</div> <!-- mpd-footer -->
-		</div> <!-- mpd-playlist-container --> <!-- PlaylistInfoCtrl -->
-	</div> <!-- mpd-container -->
+			</div> <!-- footer -->
+		</div> <!-- playlist-container --> <!-- PlaylistInfoCtrl -->
+	</div> <!-- container -->
 	<!-- Late load JavaScript. -->
 	<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/mpd.app.js') }}"></script>
