@@ -55,6 +55,9 @@ angular.module('mpd.filters', [])
 		'stop': 'stopped',
 	};
 	return function(state, brackets) {
+		if (angular.isUndefined(state)) {
+			return '';
+		}
 		if (angular.equals(brackets, true)) {
 			return '[' + MPD_STATES[state] + ']';
 		}
@@ -63,7 +66,7 @@ angular.module('mpd.filters', [])
 })
 .filter('volume', function() {
 	return function(volume) {
-		if (volume == -1) {
+		if (angular.equals(volume, -1)) {
 			return "N/A";
 		}
 		else {
