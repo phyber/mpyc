@@ -14,16 +14,16 @@
 				<span id="mpd-current-tracktime">
 					<span id="mpd-current-tracktime-text">{{ '{{status.time.split(":")[0] | duration}}' }}</span>/<span id="mpd-current-total-tracktime-text">{{ '{{status.time.split(":")[1] | duration}}' }}</span>
 				</span>
-				<span id="mpd-current-status-text" data-ng-click="toggleState()">{{ '[{{status.state | state}}]' }}</span>
+				<span id="mpd-current-status-text" data-ng-click="toggleState()" data-ng-bind="status.state | state:true"></span>
 			</div>
 			<div id="mpd-status-center">
-				--| <span id="mpd-current-album-text" class="track-album-color">{{ '{{currentsong.album}}' }}</span> |--
+				--| <span id="mpd-current-album-text" class="track-album-color" data-ng-bind="currentsong.album"></span> |--
 				<span id="mpd-current-track" data-ng-click="broadcastCurrentSongPage()">
-					<span id="mpd-current-artist-text" class="track-artist-color">{{ '{{currentsong.artist}}' }}</span> - <span id="mpd-current-track-text" class="track-title-color">{{ '{{currentsong.title}}' }}</span> (<span id="mpd-current-trackdate-text" class="track-date-color">{{ '{{currentsong.date}}' }}</span>)
+					<span id="mpd-current-artist-text" class="track-artist-color" data-ng-bind="currentsong.artist"></span> - <span id="mpd-current-track-text" class="track-title-color" data-ng-bind="currentsong.title"></span> (<span id="mpd-current-trackdate-text" class="track-date-color" data-ng-bind="currentsong.date"></span>)
 				</span>
 			</div>
 			<div id="mpd-status-right">
-				<span id="mpd-volume-text" title="Volume">{{ '{{status.volume | volume}}' }}</span>
+				<span id="mpd-volume-text" title="Volume" data-ng-bind="status.volume | volume"></span>
 				<span id="mpd-flags-text" title="Flags"></span>
 			</div>
 		</div> <!-- mpd-status-container --><!-- StatusCtrl -->
@@ -31,14 +31,14 @@
 		<hr/>
 		<div id="mpd-playlist-container" data-ng-controller="PlaylistInfoCtrl">
 			<div id="mpd-playlist-stats">
-				Playlist: (<span id="mpd-playlist-items-text">{{ '{{playlistinfo.length}}' }}</span> items, length: <span id="mpd-playlist-length-text">{{ '{{playlist_total_time_secs | duration:true}}' }}</span>)
+				Playlist: (<span id="mpd-playlist-items-text" data-ng-bind="playlistinfo.length"></span> items, length: <span id="mpd-playlist-length-text" data-ng-bind="playlist_total_time_secs | duration:true"></span>)
 			</div> <!-- mpd-playlist-stats -->
 			<hr class="clearfloat"/>
 			<div id="mpd-playlist">
 				<table id="mpd-playlist-table">
 					 <thead id="mpd-playlist-table-head">
 						<tr>
-							<th class="table-header" data-ng-repeat="header in headers">{{ '{{header}}' }}</th>
+							<th class="table-header" data-ng-repeat="header in headers" data-ng-bind="header"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,7 +49,9 @@
 							data-ng-repeat="track in playlistinfo | paging:currentPage*pageSize | limitTo:pageSize">
 							<td class="track-{{ '{{ti}}' }} track-{{ '{{ti}}' }}-color"
 								title="{{ '{{track[ti]}}' }}"
-								data-ng-repeat="ti in track_info">{{ '{{track[ti]}}' }}</td>
+								data-ng-repeat="ti in track_info"
+								data-ng-bind="track[ti]">
+							</td>
 						</tr>
 					</tbody>
 				</table> <!-- mpd-playlist-table -->

@@ -54,7 +54,10 @@ angular.module('mpd.filters', [])
 		'play': 'playing',
 		'stop': 'stopped',
 	};
-	return function(state) {
+	return function(state, brackets) {
+		if (angular.equals(brackets, true)) {
+			return '[' + MPD_STATES[state] + ']';
+		}
 		return MPD_STATES[state];
 	}
 })
