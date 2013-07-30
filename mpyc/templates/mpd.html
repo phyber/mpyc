@@ -12,9 +12,16 @@
 		<div id="mpd-status-container" class="mpd-status" data-ng-controller="StatusCtrl">
 			<div id="mpd-status-left">
 				<span id="mpd-current-tracktime">
-					<span id="mpd-current-tracktime-text" data-ng-bind="status.time.split(':')[0] | duration"></span>/<span id="mpd-current-total-tracktime-text" data-ng-bind="status.time.split(':')[1] | duration"></span>
+					<span id="mpd-current-tracktime-text"
+						data-ng-bind="status.time.split(':')[0] | duration">
+					</span>/<span id="mpd-current-total-tracktime-text"
+						data-ng-bind="status.time.split(':')[1] | duration">
+					</span>
 				</span>
-				<span id="mpd-current-status-text" data-ng-click="toggleState()" data-ng-bind="status.state | state:true"></span>
+				<span id="mpd-current-status-text"
+					data-ng-click="toggleState()"
+					data-ng-bind="status.state | state:true">
+				</span>
 			</div>
 			<div id="mpd-status-center">
 				--| <span id="mpd-current-album-text" class="track-album-color" data-ng-bind="currentsong.album"></span> |--
@@ -38,7 +45,10 @@
 				<table id="mpd-playlist-table">
 					 <thead id="mpd-playlist-table-head">
 						<tr>
-							<th class="table-header" data-ng-repeat="header in headers" data-ng-bind="header"></th>
+							<th class="table-header"
+								data-ng-repeat="header in headers"
+								data-ng-bind="header">
+							</th>
 						</tr>
 					</thead>
 					<tbody>
