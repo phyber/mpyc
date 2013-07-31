@@ -66,7 +66,7 @@ angular.module('mpd.filters', [])
 })
 .filter('volume', function() {
 	return function(volume) {
-		if (angular.equals(volume, -1)) {
+		if (angular.equals(volume, '-1')) {
 			return "N/A";
 		}
 		else {
