@@ -5,10 +5,8 @@ angular.module('mpd', [
 	'mpd.filters',
 	'mpd.services',
 ])
-.config(function($httpProvider, $locationProvider) {
+.config(function($httpProvider) {
 	$httpProvider.defaults.cache = false;
-	$locationProvider.defaults.hashPrefix = '!';
-	$locationProvider.defaults.html5mode = true;
 })
 .constant('constant', {
 	PLAYLIST_PAGE_SIZE: 50,
