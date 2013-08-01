@@ -13,7 +13,7 @@ angular.module('mpd.controllers', [])
 	var source = new EventSource(constant.INFO_STREAM_URI);
 	source.addEventListener('message', sseCallback, false);
 })
-.controller('PlaylistInfoCtrl', function($rootScope, $scope, $http, $filter, constant) {
+.controller('PlaylistInfoCtrl', function($rootScope, $scope, $http, $filter, $location, constant) {
 	$scope.headers = [
 		"Time",
 		"Artist",
@@ -28,6 +28,14 @@ angular.module('mpd.controllers', [])
 	];
 	$scope.currentPage = 0;
 	$scope.pageSize = constant.PLAYLIST_PAGE_SIZE;
+	$scope.previousPage = function() {
+		$scope.currentPage = $scope.currentPage - 1;
+		$location.path('/playlist/page/' + $scope.currentPage);
+	}
+	$scope.nextPage = function() {
+		$scope.currentPage = $scope.currentPage + 1;
+		$location.path('/playlist/page/' + $scope.currentPage);
+	}
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
 	}
