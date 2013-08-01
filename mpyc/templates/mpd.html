@@ -69,10 +69,10 @@
 			<div id="footer">
 				<span id="prev-page"
 					data-ng-hide="currentPage <= 0"
-					data-ng-click="currentPage = currentPage - 1">&lt;-- Previous</span>
+					data-ng-click="previousPage()">&lt;-- Previous</span>
 				<span id="next-page"
 					data-ng-hide="currentPage >= playlistinfo.length/pageSize - 1"
-					data-ng-click="currentPage = currentPage + 1">Next --&gt;</span>
+					data-ng-click="nextPage()">Next --&gt;</span>
 			</div> <!-- footer -->
 		</div> <!-- playlist-container --> <!-- PlaylistInfoCtrl -->
 	</div> <!-- container -->
