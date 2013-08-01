@@ -41,6 +41,12 @@ angular.module('mpd.controllers', [])
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
 	}
+	$scope.$watch(function() {
+		return $location.path();
+	}, function() {
+		console.log("location.path changed.");
+	});
+
 	$scope.trackDblClick = function(pos) {
 		var httpConfig = {
 			'params': {'songid': pos},
