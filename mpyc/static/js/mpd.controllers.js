@@ -28,13 +28,15 @@ angular.module('mpd.controllers', [])
 	];
 	$scope.currentPage = 0;
 	$scope.pageSize = constant.PLAYLIST_PAGE_SIZE;
+	var setPage = function(page) {
+		$scope.currentPage = page;
+		$location.path('/playlist/page/' + page);
+	}
 	$scope.previousPage = function() {
-		$scope.currentPage = $scope.currentPage - 1;
-		$location.path('/playlist/page/' + $scope.currentPage);
+		setPage($scope.currentPage - 1);
 	}
 	$scope.nextPage = function() {
-		$scope.currentPage = $scope.currentPage + 1;
-		$location.path('/playlist/page/' + $scope.currentPage);
+		setPage($scope.currentPage + 1);
 	}
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.playlistinfo.length / $scope.pageSize);
